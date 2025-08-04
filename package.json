@@ -1,0 +1,48 @@
+cat > package.json << 'EOF'
+{
+  "name": "free-roas-analysis",
+  "version": "1.0.0",
+  "description": "Free ROAS Analysis Calculator - See how AILeadVoice.com can 4x your campaign performance",
+  "main": "index.js",
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "deploy": "gh-pages -d build"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-scripts": "5.0.1",
+    "lucide-react": "^0.263.1"
+  },
+  "devDependencies": {
+    "gh-pages": "^4.0.0"
+  },
+  "keywords": [
+    "roas",
+    "calculator", 
+    "ai",
+    "lead-generation",
+    "marketing",
+    "roi",
+    "conversion"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "homepage": "https://YOURUSERNAME.github.io/free-roas-analysis",
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
+EOF

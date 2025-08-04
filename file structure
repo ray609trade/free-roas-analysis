@@ -1,0 +1,8 @@
+# Create directories
+mkdir src
+mkdir public
+
+# Create the main files (we'll add content next)
+touch package.json
+touch index.html
+touch src/App.js

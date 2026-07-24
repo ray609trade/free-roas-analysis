@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /privacy.html
+Disallow: /terms.html
+
+# Update the domain below once your custom domain is live.
+Sitemap: https://reclaimwealth.example.com/sitemap.xml

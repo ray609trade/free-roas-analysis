@@ -50,21 +50,37 @@ trustworthy and compliant.
 - Vanilla HTML/CSS/JS; deploys anywhere static (GitHub Pages, Netlify, Vercel, S3).
 - Fully responsive, mobile-first.
 
-## Configuration
+## Lead capture (wired &amp; live)
 
-Open `index.html` and edit the `CONFIG` object near the bottom:
+Leads are delivered by email through **[FormSubmit.co](https://formsubmit.co)** —
+no account or API key required. Config lives in the `CONFIG` object near the
+bottom of `index.html`:
 
 ```js
 const CONFIG = {
-  leadEmail: "info@rmgcredit.com",   // where lead notifications go
-  leadEndpoint: ""                    // optional: POST endpoint (Formspree, Basin, your API)
+  leadEmail: "info@rmgcredit.com",                          // mailto fallback + display
+  leadEndpoint: "https://formsubmit.co/ajax/info@rmgcredit.com" // live email backend
 };
 ```
 
-- Leave `leadEndpoint` empty to use a `mailto:` fallback for leads.
-- Set it to a form backend to capture leads server-side.
-- Leads are also cached in the visitor's `localStorage` (`rw_leads`) as a demo
-  fallback — replace with a real backend before production.
+**⚠️ One-time activation (required before emails arrive):** the *first* time
+someone submits the form, FormSubmit sends a confirmation email to
+`info@rmgcredit.com`. Click the link in it once. After that, every submission
+is emailed to you automatically (name, email, phone, states, former employers).
+
+- Change the address by editing the email at the end of `leadEndpoint`.
+- To switch to another backend later (Formspree, Basin, your own API), just
+  replace the `leadEndpoint` URL — the code POSTs JSON either way.
+- Every lead is also cached in the visitor's browser `localStorage` (`rw_leads`)
+  as a safety net if the network request fails.
+
+## Legal pages
+
+- `privacy.html` — Privacy Policy (what's collected, how it's used, no selling of data)
+- `terms.html` — Terms of Service (search-assistant model, no guarantees, disclaimers)
+
+Both are linked from the footer and the consent checkbox. They're solid
+starting templates — **have a lawyer review them before you go live.**
 
 ## Next steps / roadmap
 

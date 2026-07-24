@@ -266,7 +266,7 @@
 
           <label class="consent">
             <input type="checkbox" id="consent" required />
-            <span>I authorize ReclaimWealth to search public registries on my behalf and to contact me about potential matches. I understand searching is free and I'm under no obligation.</span>
+            <span>I authorize ReclaimWealth to search public registries on my behalf and to contact me about potential matches. I understand searching is free and I'm under no obligation, and I agree to the <a href="terms.html" target="_blank">Terms</a> and <a href="privacy.html" target="_blank">Privacy Policy</a>.</span>
           </label>
           <div class="err" id="formErr">Please fill in your name, a valid email, and check the box to continue.</div>
 
@@ -428,6 +428,8 @@
           <h5>Get Started</h5>
           <a href="#search">Search My Accounts</a>
           <a href="mailto:info@rmgcredit.com">Contact Us</a>
+          <a href="privacy.html">Privacy Policy</a>
+          <a href="terms.html">Terms of Service</a>
         </div>
       </div>
       <div class="disclaimer">
@@ -458,12 +460,17 @@
      CONFIG: change these to match your business before going live.
      ========================================================================= */
   const CONFIG = {
-    // Where lead notifications go. Replace with your real intake email or,
-    // better, a form-backend endpoint (Formspree, Basin, your own API).
+    // Where lead notifications go (also used for the mailto fallback link).
     leadEmail: "info@rmgcredit.com",
-    // Optional: POST endpoint for leads. If set, the form will POST JSON here
-    // instead of falling back to a mailto: link. Leave "" to use mailto.
-    leadEndpoint: ""  // e.g. "https://formspree.io/f/xxxxxx"
+
+    // Live lead backend. This uses FormSubmit.co, which needs NO signup:
+    // submissions are emailed straight to the address below.
+    //   >>> ONE-TIME ACTIVATION: the very first submission triggers a
+    //       confirmation email to info@rmgcredit.com. Click the link in it
+    //       once, and every submission after that is delivered automatically.
+    // To use a different address, change the email at the end of this URL.
+    // To swap backends later (Formspree/Basin/your own API), just replace it.
+    leadEndpoint: "https://formsubmit.co/ajax/info@rmgcredit.com"
   };
 
   document.getElementById('year').textContent = new Date().getFullYear();
@@ -525,12 +532,21 @@
 
   /* ---- lead capture ---- */
   function submitLead(data){
+    // Flatten for easy reading in the notification email.
     const payload = {
-      source:'ReclaimWealth 401k/IRA Finder',
+      source: 'ReclaimWealth 401k/IRA Finder',
       submittedAt: new Date().toISOString(),
-      ...data
+      name: (data.firstName + ' ' + data.lastName).trim(),
+      email: data.email,
+      phone: data.phone || '',
+      states: data.state || '',
+      formerEmployers: data.employers.join(', '),
+      // FormSubmit.co control fields (ignored harmlessly by other backends):
+      _subject: 'New Lost-Account Search: ' + data.firstName + ' ' + data.lastName,
+      _template: 'table',
+      _captcha: 'false'
     };
-    // Keep a local copy (demo persistence) so nothing is lost if no backend is set.
+    // Keep a local copy (demo persistence) so nothing is lost if the request fails.
     try {
       const saved = JSON.parse(localStorage.getItem('rw_leads') || '[]');
       saved.push(payload);
@@ -540,7 +556,7 @@
     if (CONFIG.leadEndpoint){
       fetch(CONFIG.leadEndpoint, {
         method:'POST',
-        headers:{'Content-Type':'application/json'},
+        headers:{'Content-Type':'application/json', 'Accept':'application/json'},
         body: JSON.stringify(payload)
       }).catch(()=>{ /* silent — results still shown to user */ });
     }

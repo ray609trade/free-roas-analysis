@@ -196,6 +196,34 @@ function submitLead(data) {
     employer_count: data.employers.length
   });
 
+  /* Push to the CRM if one is configured (see assets/integrations.js).
+     Fire-and-forget: a CRM outage must never affect the user's results. */
+  if (typeof sendToCrm === "function") {
+    sendToCrm({
+      event: "lead_created",
+      submittedAt: payload.submittedAt,
+      name: payload.name,
+      firstName: data.firstName,
+      lastName: data.lastName,
+      email: data.email,
+      phone: data.phone || "",
+      states: data.state || "",
+      formerEmployers: payload.formerEmployers,
+      plan: "free",
+      consent: {
+        version: CONSENT_VERSION,
+        page: payload.consentPage,
+        userAgent: payload.consentUserAgent,
+        serviceConsent: payload.serviceConsent,
+        serviceConsentText: payload.serviceConsentText,
+        phoneConsent: payload.phoneConsent,
+        phoneConsentText: payload.phoneConsentText,
+        subscriptionConsent: "(n/a)",
+        subscriptionConsentText: "(n/a)"
+      }
+    });
+  }
+
   if (!CONFIG.leadEndpoint) return Promise.resolve({ ok: false, reason: "no-endpoint" });
 
   return fetch(CONFIG.leadEndpoint, {

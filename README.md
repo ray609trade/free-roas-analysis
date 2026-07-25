@@ -12,7 +12,7 @@ dependencies, generated from a structured knowledge base.
 
 ```bash
 node build/build.js      # generate state + recordkeeper pages, sitemap, llms.txt
-node build/qa.js         # run the QA gate (41 checks)
+node build/qa.js         # run the QA gate (53 checks)
 node build/qa.js --links # additionally verify every external URL (needs open network)
 python3 -m http.server 8080
 ```
@@ -25,6 +25,8 @@ about.html          business identity, how we make money (E-E-A-T)
 terms.html          Terms of Service — subscriptions, TCPA, finder-law posture
 privacy.html        Privacy Policy — CCPA rights, retention, consent records
 disclosures.html    plain-language disclosures (liability centrepiece)
+checkout.html       plan terms + express affirmative consent (pre-Stripe)
+thank-you.html      post-payment confirmation (Stripe success URL)
 404.html
 
 data/               THE KNOWLEDGE BASE — everything generates from here
@@ -41,6 +43,8 @@ states/             GENERATED — 10 state guides + hub
 find/               GENERATED — 15 recordkeeper guides + hub
 assets/site.css     shared styles
 assets/site.js      form, validation, consent capture, results
+assets/integrations.js  ← EDIT THIS to connect Stripe + CRM + analytics
+assets/og-image.png     1200x630 social card
 ```
 
 **The data files are the product.** The HTML is one rendering of them. Adding a
@@ -61,6 +65,62 @@ Leads POST to FormSubmit and arrive by email. **One-time activation:** the first
 submission sends a confirmation email to `info@rmgcredit.com` — click the link
 once and delivery is automatic thereafter. Every lead carries consent evidence:
 timestamp, page URL, user agent, consent version, and the verbatim consent text.
+
+## Connecting your payment processor and CRM
+
+Everything lives in **`assets/integrations.js`** — one file, no other changes needed.
+
+### Stripe (about 10 minutes, no code, no backend)
+
+1. Stripe Dashboard → **Product catalogue** → create two products:
+   - `Full Sweep` — one-time — **$29**
+   - `Ongoing Monitoring` — recurring monthly — **$9**
+2. For each: **Payment links → Create link**.
+3. Set each link's success URL to:
+   - `https://raysmgmt.com/thank-you.html?plan=full-sweep`
+   - `https://raysmgmt.com/thank-you.html?plan=monitoring`
+4. Paste the two URLs into `INTEGRATIONS.payments.links` in `assets/integrations.js`.
+
+Until they are set, `/checkout.html` shows a "contact us" fallback rather than a
+broken button — nothing breaks in the meantime.
+
+**Never put a Stripe secret key (`sk_...`) in this repo.** It ships to every
+visitor's browser. Payment Link URLs and publishable keys (`pk_...`) only. The QA
+gate fails the build if a secret key pattern appears in client-side code.
+
+**Do not link the pricing table straight to Stripe.** Paid tiers must route through
+`/checkout.html`, which captures the express affirmative consent to the renewal
+terms that ROSCA and state auto-renewal laws require. The QA gate enforces this.
+
+### CRM (any provider)
+
+Set `INTEGRATIONS.crm.webhookUrl` to an endpoint that accepts a JSON POST:
+
+| Provider | Where to get the URL |
+|---|---|
+| Zapier | Zap → Webhooks by Zapier → Catch Hook |
+| Make.com | Scenario → Custom webhook |
+| GoHighLevel | Automation → Trigger: Inbound Webhook |
+| HubSpot | Workflow webhook, or Forms API |
+| Salesforce | Web-to-Lead endpoint, or Flow HTTP callout |
+| Your own API | any HTTPS endpoint |
+
+Call `crmPayloadShape()` in the browser console to see the exact field structure
+before you map anything. Two events fire: `lead_created` (free search submitted)
+and `purchase_consent` (checkout consent given, before Stripe redirect). Each
+carries the full consent record.
+
+`clientReferenceId` is passed to Stripe as `client_reference_id` and appears on the
+payment in your dashboard — use it to reconcile a Stripe charge to a CRM lead.
+
+If your webhook endpoint does not send CORS headers, set `mode: "no-cors"`. A CRM
+outage never blocks a user: the lead is still stored locally and the results still
+render.
+
+### Analytics
+
+Set `ga4MeasurementId` or `plausibleDomain` in the same file. Events emitted:
+`lead_submit`, `registry_click`, `purchase_complete`.
 
 ## Compliance built in
 
@@ -90,7 +150,7 @@ than reaching production.
 3. Have counsel review all four documents plus per-state finder registration.
 4. Click the FormSubmit activation link; send one real test lead.
 5. Verify Search Console + Bing; submit `sitemap.xml`.
-6. Add `assets/og-image.png` (1200×630) — referenced but not yet created.
+6. Connect Stripe Payment Links and your CRM webhook (see above).
 
 ## Legal
 

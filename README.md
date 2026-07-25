@@ -13,7 +13,7 @@ dependencies, generated from a structured knowledge base.
 
 ```bash
 node build/build.js      # generate state + recordkeeper pages, sitemap, llms.txt
-node build/qa.js         # run the QA gate (54 checks)
+node build/qa.js         # run the QA gate (58 checks)
 node build/qa.js --links # additionally verify every external URL (needs open network)
 python3 -m http.server 8080
 ```
@@ -76,12 +76,12 @@ Everything lives in **`assets/integrations.js`** — one file, no other changes 
 ### Stripe (about 10 minutes, no code, no backend)
 
 1. Stripe Dashboard → **Product catalogue** → create two products:
-   - `Full Sweep` — one-time — **$29**
-   - `Ongoing Monitoring` — recurring monthly — **$9**
+   - `7-Day Full Access` — **one-time $19** (do NOT add a recurring price)
+   - `30-Day Full Access` — **recurring monthly $29**
 2. For each: **Payment links → Create link**.
 3. Set each link's success URL to:
-   - `https://raysmgmt.com/thank-you.html?plan=full-sweep`
-   - `https://raysmgmt.com/thank-you.html?plan=monitoring`
+   - `https://raysmgmt.com/thank-you.html?plan=7-day`
+   - `https://raysmgmt.com/thank-you.html?plan=30-day`
 4. Paste the two URLs into `INTEGRATIONS.payments.links` in `assets/integrations.js`.
 
 Until they are set, `/checkout.html` shows a "contact us" fallback rather than a

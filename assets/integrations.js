@@ -21,12 +21,12 @@ var INTEGRATIONS = {
      ---------------------------------------------------------------------
      Setup (about 10 minutes, no code):
        1. Stripe Dashboard → Product catalogue → add your products:
-            "Full Sweep"          one-time      $29
-            "Ongoing Monitoring"  recurring     $9 / month
+            "7-Day Full Access"   one-time      $19   (NO recurring price)
+            "30-Day Full Access"  recurring     $29 / month
        2. For each product: Payment links → Create link.
        3. In the link settings, set the success URL to:
-            https://raysmgmt.com/thank-you.html?plan=full-sweep
-            https://raysmgmt.com/thank-you.html?plan=monitoring
+            https://raysmgmt.com/thank-you.html?plan=7-day
+            https://raysmgmt.com/thank-you.html?plan=30-day
        4. Paste each link URL below.
 
      Leave a URL empty and that plan's button shows a "contact us" fallback
@@ -41,8 +41,8 @@ var INTEGRATIONS = {
   payments: {
     provider: "stripe-payment-links",
     links: {
-      "full-sweep": "",   // e.g. "https://buy.stripe.com/xxxxxxxxxxxx"
-      "monitoring": ""    // e.g. "https://buy.stripe.com/yyyyyyyyyyyy"
+      "7-day": "",    // e.g. "https://buy.stripe.com/xxxxxxxxxxxx"
+      "30-day": ""    // e.g. "https://buy.stripe.com/yyyyyyyyyyyy"
     },
     /* Shown to the user if a link is not configured yet. */
     fallbackEmail: "info@rmgcredit.com"
@@ -98,36 +98,38 @@ var INTEGRATIONS = {
    update both together.
    ========================================================================= */
 var PLANS = {
-  "full-sweep": {
-    id: "full-sweep",
-    name: "Full Sweep",
-    price: "$29",
-    priceNumeric: 29,
+  "7-day": {
+    id: "7-day",
+    name: "7-Day Full Access",
+    price: "$19",
+    priceNumeric: 19,
     billing: "one-time",
     recurring: false,
-    summary: "We run the 50-state unclaimed property sweep and trace every employer you list.",
+    summary: "Your complete findings report plus seven days of access to work through them.",
     includes: [
-      "50-state unclaimed property sweep run for you",
+      "Full 50-state unclaimed property sweep run for you",
       "Form 5500 trace on every employer you list",
-      "Current plan administrator contact details",
-      "Prepared claim packet with document checklist",
-      "Emailed results and step-by-step claim instructions"
+      "Complete findings report: every match, every plan administrator, every contact",
+      "Prepared claim packet with your document checklist",
+      "Seven days of access to your report",
+      "Does not auto-renew — nothing further is charged"
     ]
   },
-  "monitoring": {
-    id: "monitoring",
-    name: "Ongoing Monitoring",
-    price: "$9",
-    priceNumeric: 9,
+  "30-day": {
+    id: "30-day",
+    name: "30-Day Full Access",
+    price: "$29",
+    priceNumeric: 29,
     billing: "per month",
     recurring: true,
     renewalPeriod: "month",
-    summary: "Quarterly re-sweeps and alerts as new property is reported in your name.",
+    summary: "Everything in the 7-day report, plus ongoing monitoring and help getting the claim filed.",
     includes: [
-      "Everything in Full Sweep",
-      "Quarterly re-sweep as new property is reported",
+      "Everything in 7-Day Full Access",
+      "Monthly re-sweep as new property is reported to the states",
       "Alerts when a new match appears in your name",
       "Claim support by email and phone",
+      "Help preparing and checking your claim forms",
       "Cancel anytime online, in one click"
     ]
   }
@@ -147,7 +149,7 @@ function crmPayloadShape() {
     email: "string", phone: "string (may be empty)",
     states: "comma-separated string",
     formerEmployers: "comma-separated string",
-    plan: "free | full-sweep | monitoring",
+    plan: "free | 7-day | 30-day",
     consent: {
       version: "string",
       page: "URL where consent was given",

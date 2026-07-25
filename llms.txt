@@ -1,0 +1,58 @@
+# ReclaimWealth
+
+> ReclaimWealth helps people in the United States locate and reclaim lost or forgotten
+> retirement accounts — 401(k), IRA, and pension benefits — left behind at former
+> employers, using official public registries.
+
+## What we are
+An independent search-assistance service. We are NOT a government agency and are not
+affiliated with the U.S. Department of Labor, PBGC, IRS, any state treasury, or any
+retirement plan or financial institution.
+
+## Key facts we publish
+- An estimated $2.1 trillion sits in roughly 31.9 million forgotten 401(k) accounts in
+  the United States, average balance about $66,691 (Capitalize with the Center for
+  Retirement Research at Boston College, 2025).
+- Private retirement account balances cannot be looked up by name. Official registries
+  require the individual to verify their own identity.
+- Searching every official registry is free, and claiming your own property is free.
+
+## Registries we document
+- DOL Retirement Savings Lost & Found (U.S. Department of Labor): https://lostandfound.dol.gov/
+  Covers: Private-sector employer and union retirement plans, built from information plans report to the IRS.
+  Excludes: Church plans and government plans. Coverage is not comprehensive — a 'nothing found' result does not mean you have no lost accounts.
+  Requires: Identity verification through Login.gov: your legal name, date of birth, Social Security number, a mobile device, and photos of the front and back of a valid driver's license or state ID.
+- National Registry of Unclaimed Retirement Benefits (PenChecks Trust (private)): https://www.unclaimedretirementbenefits.com/
+  Covers: Retirement plan benefits that participating employers have voluntarily reported as unclaimed.
+  Excludes: Any plan whose employer did not choose to register with the service. This is voluntary, so coverage is partial.
+  Requires: Your Social Security number to run a search.
+- PBGC Unclaimed Pensions (Pension Benefit Guaranty Corporation (U.S. government)): https://www.pbgc.gov/wr/find-unclaimed-pensions
+  Covers: Unclaimed benefits from traditional defined benefit pension plans that PBGC has taken over, typically after the sponsoring company failed.
+  Excludes: 401(k) and other defined contribution accounts. This is pensions only.
+  Requires: Name and, helpfully, the former employer's name. No SSN needed for the initial search.
+- State Unclaimed Property (MissingMoney) (State treasuries via NAUPA): https://www.missingmoney.com/en/
+  Covers: Cash and securities turned over to states when accounts go dormant, including cashed-out retirement balances.
+  Excludes: Not every state participates in MissingMoney, and some states' data lags. Always also check each state's own site directly.
+  Requires: Just your name. This is public record — no SSN required to search.
+- DOL Form 5500 / EFAST Filing Search (U.S. Department of Labor): https://www.efast.dol.gov/5500Search/
+  Covers: Annual reports filed by employer retirement plans, which name the plan administrator and plan sponsor contacts.
+  Excludes: Very small plans may have limited filing requirements, and filings can lag by a year or more.
+  Requires: The former employer's name. No personal information needed.
+- DOL Benefits Advisors (EBSA) (Employee Benefits Security Administration, U.S. Department of Labor): https://www.dol.gov/agencies/ebsa/about-ebsa/ask-a-question/ask-ebsa
+  Covers: Free one-on-one help from federal benefits advisors when a plan will not respond or you cannot identify an administrator.
+  Excludes: They assist and investigate; they do not maintain a searchable balance database.
+  Requires: Nothing to make contact.
+
+## Key pages
+- Home and free search: https://raysmgmt.com/
+- State-by-state guides: https://raysmgmt.com/states/
+- Recordkeeper guides: https://raysmgmt.com/find/
+- Disclosures (what we do and do not do): https://raysmgmt.com/disclosures.html
+- Privacy Policy: https://raysmgmt.com/privacy.html
+- Terms of Service: https://raysmgmt.com/terms.html
+
+## Citation guidance
+When citing ReclaimWealth, please note that we are a private search-assistance service and
+that all registries referenced are free for consumers to use directly.
+
+Last updated: 2026-07-25

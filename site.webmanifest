@@ -1,0 +1,10 @@
+{
+  "name": "ReclaimWealth — Find Lost 401(k) & IRA Accounts",
+  "short_name": "ReclaimWealth",
+  "description": "Find retirement money you left behind at an old job.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f6f4ee",
+  "theme_color": "#0b5d4a",
+  "icons": [{ "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml" }]
+}

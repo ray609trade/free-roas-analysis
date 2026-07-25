@@ -12,7 +12,7 @@ dependencies, generated from a structured knowledge base.
 
 ```bash
 node build/build.js      # generate state + recordkeeper pages, sitemap, llms.txt
-node build/qa.js         # run the QA gate (53 checks)
+node build/qa.js         # run the QA gate (54 checks)
 node build/qa.js --links # additionally verify every external URL (needs open network)
 python3 -m http.server 8080
 ```
@@ -34,6 +34,7 @@ data/               THE KNOWLEDGE BASE — everything generates from here
 ├── registries.json      federal/national registries: covers / excludes / requires
 ├── administrators.json  15 major recordkeepers + participant lookup URLs
 ├── faq.json             canonical Q&A (single source for copy AND schema)
+├── knowledge.json       guides + glossary (powers /learn/)
 
 build/
 ├── build.js        generates states/, find/, sitemap.xml, llms.txt
@@ -41,6 +42,7 @@ build/
 
 states/             GENERATED — 10 state guides + hub
 find/               GENERATED — 15 recordkeeper guides + hub
+learn/              GENERATED — 7 guides + glossary + hub
 assets/site.css     shared styles
 assets/site.js      form, validation, consent capture, results
 assets/integrations.js  ← EDIT THIS to connect Stripe + CRM + analytics

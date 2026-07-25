@@ -43,10 +43,34 @@ retirement plan or financial institution.
   Excludes: They assist and investigate; they do not maintain a searchable balance database.
   Requires: Nothing to make contact.
 
+## Guides
+- What happens to your 401(k) when you leave a job: https://raysmgmt.com/learn/what-happens-to-401k-when-you-leave-a-job.html
+  Q: What happens to a 401(k) when you leave a job?
+  A: When you leave a job your 401(k) does not disappear or revert to your employer — the money stays yours. It normally remains in the old employer's plan, but depending on the balance it may be cashed out to you, rolled into an IRA chosen by the plan, or eventually turned over to your state as unclaimed property.
+- How to find a lost 401(k): the complete process: https://raysmgmt.com/learn/how-to-find-a-lost-401k.html
+  Q: How do I find a lost 401(k) from an old job?
+  A: Search four places in order: the Department of Labor's Retirement Savings Lost & Found, the National Registry of Unclaimed Retirement Benefits, your state's unclaimed property program, and the DOL's Form 5500 filings to identify who administers your old plan today. All four are free, and no legitimate service can look up your private balance by name.
+- Escheatment: how your money ends up with the state: https://raysmgmt.com/learn/what-is-escheatment.html
+  Q: What is escheatment and how does it affect retirement accounts?
+  A: Escheatment is the legal process by which an institution turns over an inactive account to the state after a dormancy period, typically three to five years of no contact. The state holds the money for you indefinitely in most cases — escheatment does not mean your money was forfeited or lost.
+- Auto-rollover and safe harbor IRAs: the account you never opened: https://raysmgmt.com/learn/auto-rollover-ira.html
+  Q: What is an automatic rollover IRA?
+  A: An automatic rollover IRA, also called a safe harbor IRA, is an account a former employer's plan opens in your name — without needing your signature — to move a small balance out of the plan after you leave. It is legal and legitimate, but because notice goes to your last known address, many people never learn the account exists.
+- Form 5500: how to find out who holds your old plan: https://raysmgmt.com/learn/form-5500-explained.html
+  Q: How do I find out who administers my former employer's 401(k) plan?
+  A: Search the Department of Labor's Form 5500 filings. Employer retirement plans file an annual report that names the plan sponsor and administrator with contact details, so even when a company has merged, been acquired, or closed, the filing shows who is responsible for the plan today. It is free, public, and requires no personal information.
+- Claiming a deceased relative's retirement account: https://raysmgmt.com/learn/claim-deceased-relatives-retirement-account.html
+  Q: Can I claim a deceased parent's or spouse's 401(k) or pension?
+  A: Yes, if you are the named beneficiary or the legal heir, but you will need documentation — typically a death certificate, proof of your relationship or beneficiary status, and sometimes probate paperwork. Each plan and each state sets its own evidence requirements, and the process takes longer than claiming your own property.
+- How to spot an unclaimed money scam: https://raysmgmt.com/learn/how-to-spot-unclaimed-money-scams.html
+  Q: How do I know if an unclaimed money service is a scam?
+  A: The clearest warning sign is anyone claiming to have already located money for you before you have verified your identity with the holding institution — private retirement balances cannot be looked up by name, so nobody can honestly know. Others: demands for payment by gift card or wire, claims of government affiliation, and manufactured urgency about money that is in fact held indefinitely.
+
 ## Key pages
 - Home and free search: https://raysmgmt.com/
 - State-by-state guides: https://raysmgmt.com/states/
 - Recordkeeper guides: https://raysmgmt.com/find/
+- Guides and glossary: https://raysmgmt.com/learn/
 - Disclosures (what we do and do not do): https://raysmgmt.com/disclosures.html
 - Privacy Policy: https://raysmgmt.com/privacy.html
 - Terms of Service: https://raysmgmt.com/terms.html

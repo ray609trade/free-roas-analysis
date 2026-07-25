@@ -1,0 +1,226 @@
+{
+  "_meta": {
+    "description": "Guides and glossary powering /learn/. Long-tail SEO surface and the citation surface for AI answer engines. Every guide is answer-first: the summary must stand alone as a complete answer.",
+    "lastUpdated": "2026-07-25",
+    "editorialRules": [
+      "Lead with the answer, then explain. Engines lift the first sentence.",
+      "Never imply we can see private balances or that funds have been found.",
+      "Always note that the registries and the claim itself are free.",
+      "Cite a primary source for any statistic or legal mechanism."
+    ]
+  },
+
+  "guides": [
+    {
+      "slug": "what-happens-to-401k-when-you-leave-a-job",
+      "title": "What happens to your 401(k) when you leave a job",
+      "question": "What happens to a 401(k) when you leave a job?",
+      "summary": "When you leave a job your 401(k) does not disappear or revert to your employer — the money stays yours. It normally remains in the old employer's plan, but depending on the balance it may be cashed out to you, rolled into an IRA chosen by the plan, or eventually turned over to your state as unclaimed property.",
+      "readingMinutes": 4,
+      "sections": [
+        {
+          "h": "The balance decides what happens",
+          "p": "Federal rules let plans treat small balances differently from large ones. Broadly: larger balances stay put unless you move them, mid-size balances can be moved into an IRA without your signature, and very small balances can simply be cashed out and mailed to you. The exact thresholds are set by regulation and have been raised over time, so check with the plan rather than relying on a number you read years ago."
+        },
+        {
+          "h": "The 'force-out' is what catches people",
+          "p": "If your balance is above the cash-out floor but below the force-out ceiling, the plan may move your money into an IRA it selects for you — without needing your consent. This is a legitimate, legal process called an automatic rollover or safe harbor IRA. The problem is practical: the notice goes to the address the plan has on file. If you moved, you never see it, and years later you have an IRA at an institution you have never heard of."
+        },
+        {
+          "h": "Then the trail goes cold",
+          "p": "Those auto-rollover IRAs are often parked in conservative, low-return options while fees continue to accrue. If mail keeps bouncing and the account goes dormant, the funds may eventually be escheated to your state as unclaimed property — which is why a 401(k) from a job you left can end up findable through a state treasurer rather than through any retirement plan at all."
+        },
+        {
+          "h": "What to do about it",
+          "p": "Work backwards through the same chain: check the old employer's plan and its recordkeeper first, then the federal registries, then state unclaimed property for every state you have lived or worked in. All of these are free to search, and you can file any claim yourself at no cost."
+        }
+      ],
+      "related": ["how-to-find-a-lost-401k", "what-is-escheatment", "auto-rollover-ira"]
+    },
+    {
+      "slug": "how-to-find-a-lost-401k",
+      "title": "How to find a lost 401(k): the complete process",
+      "question": "How do I find a lost 401(k) from an old job?",
+      "summary": "Search four places in order: the Department of Labor's Retirement Savings Lost & Found, the National Registry of Unclaimed Retirement Benefits, your state's unclaimed property program, and the DOL's Form 5500 filings to identify who administers your old plan today. All four are free, and no legitimate service can look up your private balance by name.",
+      "readingMinutes": 6,
+      "sections": [
+        {
+          "h": "Before you start: gather what you can remember",
+          "p": "Every employer where you may have had a plan, the years you worked there, the states you worked in, and any names you have used — maiden names and former names matter, because records are indexed by the name on file at the time. You do not need account numbers to begin."
+        },
+        {
+          "h": "1. DOL Retirement Savings Lost & Found",
+          "p": "The federal database of plans looking for former participants, built from what plans report to the IRS and created by the SECURE 2.0 Act. Be ready for the identity check: it uses Login.gov and needs your Social Security number, date of birth, and photos of a government ID. It does not cover church or government plans, and it is not comprehensive — a 'nothing found' result is not proof you have no lost accounts."
+        },
+        {
+          "h": "2. National Registry of Unclaimed Retirement Benefits",
+          "p": "A private registry where participating employers report unclaimed accounts. It needs your Social Security number and only covers employers who chose to register, so treat it as a quick extra check rather than an authoritative answer."
+        },
+        {
+          "h": "3. State unclaimed property",
+          "p": "The easiest place to start, because it needs only your name — no identity verification. If a retirement balance was cashed out and went dormant, it may sit with a state treasurer. Search every state you have lived or worked in, not just where you live now."
+        },
+        {
+          "h": "4. Form 5500 filings — the step most people skip",
+          "p": "This is the professional's tool. Employer plans file annual Form 5500 reports that name the plan administrator and sponsor. When a company merged, was acquired, or closed, the filing tells you who is legally responsible for the plan today — which is the party you actually need to call. It is free, it is public, and it needs no personal information."
+        },
+        {
+          "h": "If a plan will not respond",
+          "p": "Contact a Department of Labor Benefits Advisor through EBSA. They help former participants for free and can intervene when a plan is unresponsive. Almost nobody uses this, and it is one of the most effective escalations available."
+        }
+      ],
+      "related": ["what-happens-to-401k-when-you-leave-a-job", "form-5500-explained", "auto-rollover-ira"]
+    },
+    {
+      "slug": "what-is-escheatment",
+      "title": "Escheatment: how your money ends up with the state",
+      "question": "What is escheatment and how does it affect retirement accounts?",
+      "summary": "Escheatment is the legal process by which an institution turns over an inactive account to the state after a dormancy period, typically three to five years of no contact. The state holds the money for you indefinitely in most cases — escheatment does not mean your money was forfeited or lost.",
+      "readingMinutes": 3,
+      "sections": [
+        {
+          "h": "Dormancy comes first",
+          "p": "An account becomes dormant when there is no owner-initiated activity and the institution cannot reach you. The clock length varies by state and property type, commonly three to five years. Returned mail is often what starts it, which is why an unchanged address after a move is the single most common cause of a lost account."
+        },
+        {
+          "h": "Then the state takes custody",
+          "p": "The holder reports and remits the property to the state, which adds it to a public unclaimed property database. This is custodial, not confiscatory: in most states the money is held indefinitely until the rightful owner or heir claims it. There is generally no deadline."
+        },
+        {
+          "h": "Why this matters for retirement money",
+          "p": "It explains why a 401(k) can be findable through a state treasurer rather than a retirement plan. Once a balance is cashed out of the plan and the payment goes stale, it stops being a retirement account and becomes ordinary unclaimed property — searchable by name, with no identity verification needed to look."
+        },
+        {
+          "h": "The real cost of waiting",
+          "p": "Not forfeiture, but lost growth. Money sitting in a state fund or a dormant account is not compounding for your retirement. Anyone pressuring you to act immediately because your money is about to disappear is not being straight with you."
+        }
+      ],
+      "related": ["what-happens-to-401k-when-you-leave-a-job", "how-to-find-a-lost-401k"]
+    },
+    {
+      "slug": "auto-rollover-ira",
+      "title": "Auto-rollover and safe harbor IRAs: the account you never opened",
+      "question": "What is an automatic rollover IRA?",
+      "summary": "An automatic rollover IRA, also called a safe harbor IRA, is an account a former employer's plan opens in your name — without needing your signature — to move a small balance out of the plan after you leave. It is legal and legitimate, but because notice goes to your last known address, many people never learn the account exists.",
+      "readingMinutes": 4,
+      "sections": [
+        {
+          "h": "Why plans do it",
+          "p": "Maintaining accounts for departed employees costs money and creates administrative duties. Federal rules let plans move small balances into an IRA that meets safe harbor conditions, which discharges much of the plan's ongoing responsibility while preserving the money's tax-advantaged status."
+        },
+        {
+          "h": "Why it goes wrong",
+          "p": "Notice is sent to the address on file. People move. Safe harbor IRAs are typically invested conservatively to preserve principal, so returns are often low while account fees continue — meaning a modest balance can erode over years. And the account sits at an institution you never chose and may not recognise when a statement finally arrives."
+        },
+        {
+          "h": "How to find one",
+          "p": "Ask the former employer or its recordkeeper where the balance went and to which IRA provider. Use Form 5500 filings to identify who administers the plan now if the company changed hands. Check the federal registries, and check state unclaimed property in case the IRA itself later went dormant and escheated."
+        },
+        {
+          "h": "What to do once you find it",
+          "p": "You can usually consolidate it into a current employer's plan or an IRA of your choosing. That is a financial decision with tax consequences, so it is worth speaking to a licensed professional — ReclaimWealth does not give financial, tax, or legal advice."
+        }
+      ],
+      "related": ["what-happens-to-401k-when-you-leave-a-job", "form-5500-explained"]
+    },
+    {
+      "slug": "form-5500-explained",
+      "title": "Form 5500: how to find out who holds your old plan",
+      "question": "How do I find out who administers my former employer's 401(k) plan?",
+      "summary": "Search the Department of Labor's Form 5500 filings. Employer retirement plans file an annual report that names the plan sponsor and administrator with contact details, so even when a company has merged, been acquired, or closed, the filing shows who is responsible for the plan today. It is free, public, and requires no personal information.",
+      "readingMinutes": 4,
+      "sections": [
+        {
+          "h": "What Form 5500 is",
+          "p": "An annual report most employer-sponsored retirement plans must file with the federal government, covering the plan's finances, participants, and operations. The filings are public and searchable through the DOL's EFAST system."
+        },
+        {
+          "h": "What you can learn from it",
+          "p": "The legal plan name, the sponsor's name and EIN, the plan administrator and their address, the number of participants, and the plan year. Where a company was acquired, later filings often reveal the successor — the thread that reconnects you to your account."
+        },
+        {
+          "h": "How to search effectively",
+          "p": "Search the employer's exact legal name, not the brand you remember, and try variations including former names and 'Inc' or 'LLC' suffixes. Look at filings from the years you worked there, then follow forward to the most recent filing to see who holds the plan now."
+        },
+        {
+          "h": "Its limits",
+          "p": "Very small plans have reduced filing obligations, and filings can lag a year or more. If nothing appears, the plan may have terminated — in which case the balance was likely distributed, rolled into an IRA, or escheated to a state."
+        }
+      ],
+      "related": ["how-to-find-a-lost-401k", "auto-rollover-ira"]
+    },
+    {
+      "slug": "claim-deceased-relatives-retirement-account",
+      "title": "Claiming a deceased relative's retirement account",
+      "question": "Can I claim a deceased parent's or spouse's 401(k) or pension?",
+      "summary": "Yes, if you are the named beneficiary or the legal heir, but you will need documentation — typically a death certificate, proof of your relationship or beneficiary status, and sometimes probate paperwork. Each plan and each state sets its own evidence requirements, and the process takes longer than claiming your own property.",
+      "readingMinutes": 4,
+      "sections": [
+        {
+          "h": "Beneficiary designation usually controls",
+          "p": "For retirement accounts, the beneficiary form on file with the plan generally governs who inherits — often overriding a will. A surviving spouse frequently has rights under federal law. If a beneficiary was named, that person claims directly from the plan."
+        },
+        {
+          "h": "Where to search",
+          "p": "The PBGC unclaimed pension database is the place to start for traditional pensions, especially where the employer failed. Then state unclaimed property under the deceased person's name and every state they lived or worked in, and Form 5500 filings to find the administrator of a former employer's plan."
+        },
+        {
+          "h": "Documents to expect",
+          "p": "A certified death certificate, your government ID, proof of relationship such as a marriage or birth certificate, and where there is no named beneficiary, letters testamentary or other probate documentation showing your authority to act for the estate."
+        },
+        {
+          "h": "Get advice on the tax treatment",
+          "p": "Inherited retirement accounts have distribution rules and tax consequences that differ from your own accounts and that have changed in recent years. Speak to a tax professional or estate attorney before taking a distribution — this is exactly the territory where a wrong move is expensive, and ReclaimWealth does not give tax or legal advice."
+        }
+      ],
+      "related": ["how-to-find-a-lost-401k", "what-is-escheatment"]
+    },
+    {
+      "slug": "how-to-spot-unclaimed-money-scams",
+      "title": "How to spot an unclaimed money scam",
+      "question": "How do I know if an unclaimed money service is a scam?",
+      "summary": "The clearest warning sign is anyone claiming to have already located money for you before you have verified your identity with the holding institution — private retirement balances cannot be looked up by name, so nobody can honestly know. Others: demands for payment by gift card or wire, claims of government affiliation, and manufactured urgency about money that is in fact held indefinitely.",
+      "readingMinutes": 3,
+      "sections": [
+        {
+          "h": "Nobody can see your balance by name",
+          "p": "Private retirement account balances are protected. Official registries such as the DOL Lost & Found require you to verify your own identity through Login.gov. Any service claiming to have retrieved your balance from your name alone is either mistaken or lying."
+        },
+        {
+          "h": "Warning signs",
+          "p": "Requests for your Social Security number or bank login by email or text. Anyone claiming to be a government agency while demanding a fee. Any warning that your money will vanish unless you respond immediately — in most states unclaimed property is held indefinitely. Payment demanded by gift card, wire transfer, or cryptocurrency. Refusal to state a fee in writing before you agree."
+        },
+        {
+          "h": "What legitimate help looks like",
+          "p": "Fees disclosed in writing up front. A clear statement that you can search and claim for free yourself. No custody of your funds — money moves from the institution or state directly to you. Willingness to explain exactly which records were searched, and no pressure."
+        },
+        {
+          "h": "Know your rights on fees",
+          "p": "Many states regulate paid recovery assistance, including registration requirements, caps on fees, and restrictions on agreements made soon after property is reported to the state. In several states an agreement that breaks those rules is void and unenforceable. If someone wants a large percentage of your money, check your state's rules before signing anything."
+        }
+      ],
+      "related": ["how-to-find-a-lost-401k", "what-is-escheatment"]
+    }
+  ],
+
+  "glossary": [
+    { "term": "Escheatment", "definition": "The legal process by which an institution turns unclaimed property over to a state after a dormancy period. The state then holds it for the owner, in most cases indefinitely." },
+    { "term": "Dormancy period", "definition": "The length of time an account can go without owner-initiated contact before it is considered abandoned and reported to the state. Commonly three to five years, varying by state and property type." },
+    { "term": "Force-out distribution", "definition": "A plan's removal of a former employee's small balance after they leave, either by cashing it out or moving it into an IRA, permitted without the participant's consent below certain balance thresholds." },
+    { "term": "Auto-rollover IRA (safe harbor IRA)", "definition": "An IRA opened in a former employee's name by their old plan to receive a forced-out balance. Legal and legitimate, but frequently unknown to the account owner because notice went to an old address." },
+    { "term": "Plan sponsor", "definition": "The employer or organization that establishes and maintains a retirement plan for its employees." },
+    { "term": "Plan administrator", "definition": "The party legally responsible for operating the plan and answering participant requests. Named on the plan's Form 5500 filing — usually who you actually need to contact." },
+    { "term": "Recordkeeper", "definition": "The firm that maintains participant accounts and provides statements and the login portal — Fidelity, Empower, Vanguard and similar. Recordkeepers change over time, which is a common reason a login stops working." },
+    { "term": "Form 5500", "definition": "The annual report most employer retirement plans file with the federal government. Public and searchable, it identifies the sponsor and administrator, making it the best tool for tracing a plan after a merger or closure." },
+    { "term": "Orphan plan", "definition": "A retirement plan left without an active sponsor, typically after the employer went out of business. The Department of Labor has procedures for terminating these and distributing benefits to participants." },
+    { "term": "Vested balance", "definition": "The portion of a retirement account you own outright and keep when you leave. Your own contributions are always fully vested; employer contributions may vest over a schedule." },
+    { "term": "Escheated funds", "definition": "Money already transferred to a state's custody as unclaimed property. Searchable by name in public state databases, with no identity verification needed to look." },
+    { "term": "Beneficiary designation", "definition": "The form naming who inherits a retirement account. For retirement accounts this generally controls who receives the money, often overriding a will." },
+    { "term": "PBGC", "definition": "The Pension Benefit Guaranty Corporation, a federal agency that insures traditional defined benefit pensions and holds unclaimed pension benefits from failed plans." },
+    { "term": "EBSA", "definition": "The Employee Benefits Security Administration, the Department of Labor division that oversees employer retirement plans. Its Benefits Advisors help former participants for free." },
+    { "term": "SECURE 2.0 Act", "definition": "Federal retirement legislation enacted in 2022 that, among many changes, directed the Department of Labor to create the Retirement Savings Lost & Found database." },
+    { "term": "Defined contribution plan", "definition": "A plan such as a 401(k) or 403(b) where contributions are defined and the eventual benefit depends on contributions and investment performance." },
+    { "term": "Defined benefit plan", "definition": "A traditional pension promising a specified benefit in retirement, usually based on salary and years of service. Insured by the PBGC." },
+    { "term": "TPA (third-party administrator)", "definition": "A firm hired to handle a plan's day-to-day administration and compliance. Common with small-business plans, and often the party holding the records you need." }
+  ]
+}

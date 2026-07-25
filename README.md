@@ -5,6 +5,7 @@ employers, using the official public registries. Static site, no build
 dependencies, generated from a structured knowledge base.
 
 **Domain:** raysmgmt.com · **Brand:** ReclaimWealth
+**Operated by:** Ray Management Group, LLC — 16 Hamilton Street, Allentown, NJ · 609-453-8990
 
 ---
 
@@ -162,9 +163,9 @@ generated output**, or CI will fail the sync check.
 
 ## Before launch
 
-1. Replace bracketed placeholders: legal entity name, mailing address, state of
-   formation, and venue (in `terms.html`, `privacy.html`, `disclosures.html`,
-   `about.html`).
+1. **Add the ZIP code** to the mailing address (currently "16 Hamilton Street,
+   Allentown, NJ" with no ZIP). CAN-SPAM requires a valid physical postal
+   address in commercial email, so complete it before sending any.
 2. **Run `node build/qa.js --links` on an open network** — URL verification is
    blocked in restricted CI/sandbox environments and reports as unverified.
 3. Have counsel review all four documents plus per-state finder registration.

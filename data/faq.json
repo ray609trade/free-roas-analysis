@@ -1,0 +1,81 @@
+{
+  "_meta": {
+    "description": "Canonical Q&A. Single source of truth for BOTH the visible FAQ copy and the FAQPage JSON-LD, so the two can never drift apart — mismatched schema is a Google manual-action risk.",
+    "style": "Answer-first: the opening sentence of every answer must stand alone as a complete, quotable answer. AI answer engines lift that first sentence.",
+    "lastUpdated": "2026-07-25"
+  },
+  "faqs": [
+    {
+      "id": "how-to-find",
+      "q": "How do I find a 401(k) from an old job?",
+      "a": "Search four places in order: the Department of Labor's Retirement Savings Lost & Found, the National Registry of Unclaimed Retirement Benefits, your state's unclaimed property program, and the DOL's Form 5500 filings to identify your old plan's administrator. All four are free to search.",
+      "scope": "global"
+    },
+    {
+      "id": "is-it-free",
+      "q": "Is searching for a lost 401(k) free?",
+      "a": "Yes. Every official registry is free to search, and you can file a claim for your own money at no cost. ReclaimWealth charges only for optional assistance doing the work for you — never for access to your own funds.",
+      "scope": "global"
+    },
+    {
+      "id": "lookup-by-name",
+      "q": "Can a service look up my 401(k) balance by name?",
+      "a": "No, and you should be sceptical of anyone claiming otherwise. Private retirement balances are protected by law and cannot be retrieved by name alone. Official registries like the DOL Lost & Found require you to verify your own identity through Login.gov using your Social Security number and a government-issued ID.",
+      "scope": "global"
+    },
+    {
+      "id": "how-much-unclaimed",
+      "q": "How much money is sitting in forgotten 401(k) accounts?",
+      "a": "An estimated $2.1 trillion sits in about 31.9 million forgotten 401(k) accounts in the United States, with an average balance of roughly $66,691 — around a quarter of all 401(k) assets. That figure comes from 2025 research by Capitalize with the Center for Retirement Research at Boston College.",
+      "scope": "global"
+    },
+    {
+      "id": "what-happens",
+      "q": "What happens to a 401(k) when you leave a job?",
+      "a": "It usually stays in the employer's plan. Smaller balances may be automatically rolled into an IRA, and if the account goes dormant and the plan cannot locate you, the funds may eventually be turned over to your state as unclaimed property. In every one of those cases the money is still yours.",
+      "scope": "global"
+    },
+    {
+      "id": "dol-coverage",
+      "q": "Does the DOL Lost & Found cover every plan?",
+      "a": "No. It draws on what private-sector employers and unions report to the IRS, and it excludes church and government plans. It is also not comprehensive, so a 'nothing found' result does not mean you have no lost accounts — which is exactly why the state and Form 5500 searches matter.",
+      "scope": "global"
+    },
+    {
+      "id": "why-employers",
+      "q": "Why do you ask for my former employers?",
+      "a": "Retirement accounts are tied to the employer that sponsored the plan. Knowing where you worked lets us trace the correct plan and its current administrator through Form 5500 filings — even if the company merged, was bought, or went out of business.",
+      "scope": "global"
+    },
+    {
+      "id": "is-it-safe",
+      "q": "Is my information safe?",
+      "a": "We collect only what is needed to run your search, we never sell your personal information, and we do not ask for your Social Security number to get started. Our Privacy Policy sets out exactly what we keep and for how long.",
+      "scope": "global"
+    },
+    {
+      "id": "expired",
+      "q": "Can unclaimed retirement money expire or be lost for good?",
+      "a": "In most states, no — unclaimed property is held indefinitely until the rightful owner claims it, and there is no deadline. The real cost of waiting is not forfeiture but lost growth: money sitting in a dormant account or a state fund is not compounding for your retirement.",
+      "scope": "global"
+    },
+    {
+      "id": "deceased-relative",
+      "q": "Can I claim a deceased parent's or spouse's retirement account?",
+      "a": "Often yes, as the legal heir or beneficiary, but you will need documentation — typically a death certificate, proof of your relationship, and sometimes letters testamentary or probate paperwork. Each state and plan sets its own evidence requirements, and the process takes longer than claiming your own property.",
+      "scope": "global"
+    },
+    {
+      "id": "state-search",
+      "q": "How do I search for unclaimed retirement money in {{STATE}}?",
+      "a": "Search the {{PROGRAM}} operated by the {{OFFICE}} at {{SEARCH_URL}}. It is free, it is public record, and it requires only your name — no Social Security number. Search every name you have used, including maiden and former names.",
+      "scope": "state"
+    },
+    {
+      "id": "state-fee",
+      "q": "Does {{STATE}} charge a fee to claim my unclaimed property?",
+      "a": "No. {{STATE}} does not charge you to claim your own property, and you never need to pay anyone to file a claim. Paid services, including ours, sell convenience and legwork only — the underlying claim is always free to file yourself.",
+      "scope": "state"
+    }
+  ]
+}

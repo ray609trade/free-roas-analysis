@@ -1,0 +1,130 @@
+{
+  "_meta": {
+    "description": "Major U.S. retirement plan recordkeepers and how a former employee reaches them. Most lost 401(k) accounts sit with one of these firms, so this table converts a dead end into a phone call.",
+    "lastVerified": "2026-07-25",
+    "verifyNote": "URLs are link-checked by build/qa.js. Phone numbers should be re-verified quarterly. ReclaimWealth is not affiliated with any firm listed here; these are public contact details published by each company.",
+    "usage": "Powers /find/<slug>.html pages and the 'who holds my old plan' step of the search plan."
+  },
+  "administrators": [
+    {
+      "slug": "fidelity",
+      "name": "Fidelity Investments",
+      "url": "https://www.fidelity.com/",
+      "findUrl": "https://nb.fidelity.com/public/nb/default/home",
+      "phone": "800-343-3548",
+      "notes": "One of the largest 401(k) recordkeepers in the U.S. Former employees can often log in with an existing username, or re-register using their Social Security number and date of birth."
+    },
+    {
+      "slug": "empower",
+      "name": "Empower",
+      "url": "https://www.empower.com/",
+      "findUrl": "https://participant.empower-retirement.com/participant/",
+      "phone": "855-756-4738",
+      "notes": "Empower acquired the retirement businesses of Prudential, MassMutual, and Great-West. If your old plan was with any of those, it is very likely at Empower now."
+    },
+    {
+      "slug": "vanguard",
+      "name": "Vanguard",
+      "url": "https://investor.vanguard.com/",
+      "findUrl": "https://investor.vanguard.com/corporate-portal/",
+      "phone": "800-523-1188",
+      "notes": "Vanguard transferred a large portion of its recordkeeping business to Ascensus. If Vanguard has no record of your plan, check Ascensus next."
+    },
+    {
+      "slug": "principal",
+      "name": "Principal Financial Group",
+      "url": "https://www.principal.com/",
+      "findUrl": "https://www.principal.com/individuals/access-your-account",
+      "phone": "800-547-7754",
+      "notes": "Principal acquired Wells Fargo's institutional retirement business, so former Wells Fargo-administered plans often moved here."
+    },
+    {
+      "slug": "voya",
+      "name": "Voya Financial",
+      "url": "https://www.voya.com/",
+      "findUrl": "https://my.voya.com/",
+      "phone": "800-584-6001",
+      "notes": "Formerly ING U.S. Plans administered by ING before 2014 are generally now with Voya."
+    },
+    {
+      "slug": "tiaa",
+      "name": "TIAA",
+      "url": "https://www.tiaa.org/",
+      "findUrl": "https://www.tiaa.org/public/support/contact-tiaa",
+      "phone": "800-842-2252",
+      "notes": "Dominant in higher education, hospitals, and non-profits. If you worked for a university or a non-profit, start here."
+    },
+    {
+      "slug": "charles-schwab",
+      "name": "Charles Schwab",
+      "url": "https://www.schwab.com/",
+      "findUrl": "https://workplace.schwab.com/",
+      "phone": "800-724-7526",
+      "notes": "Schwab Retirement Plan Services administers many mid-size and large employer plans."
+    },
+    {
+      "slug": "ascensus",
+      "name": "Ascensus",
+      "url": "https://www.ascensus.com/",
+      "findUrl": "https://www.ascensus.com/individuals/",
+      "phone": "800-345-6363",
+      "notes": "A very large recordkeeper for small-business plans, and the destination for much of Vanguard's former recordkeeping book."
+    },
+    {
+      "slug": "adp",
+      "name": "ADP Retirement Services",
+      "url": "https://www.adp.com/",
+      "findUrl": "https://www.mykplan.com/",
+      "phone": "800-695-7526",
+      "notes": "Common where the employer also used ADP for payroll — frequent among small and mid-size businesses."
+    },
+    {
+      "slug": "paychex",
+      "name": "Paychex",
+      "url": "https://www.paychex.com/",
+      "findUrl": "https://www.paychexflex.com/",
+      "phone": "877-244-1771",
+      "notes": "Like ADP, often the recordkeeper when the employer used Paychex for payroll."
+    },
+    {
+      "slug": "john-hancock",
+      "name": "John Hancock Retirement",
+      "url": "https://www.johnhancock.com/",
+      "findUrl": "https://myplan.johnhancock.com/",
+      "phone": "800-395-1113",
+      "notes": "Manulife acquired and consolidated several small-plan books into John Hancock Retirement."
+    },
+    {
+      "slug": "transamerica",
+      "name": "Transamerica",
+      "url": "https://www.transamerica.com/",
+      "findUrl": "https://www.transamerica.com/portal/",
+      "phone": "800-755-5801",
+      "notes": "Serves a wide range of employer plan sizes, including many mid-market employers."
+    },
+    {
+      "slug": "nationwide",
+      "name": "Nationwide Retirement Solutions",
+      "url": "https://www.nationwide.com/",
+      "findUrl": "https://www.nationwide.com/personal/investing/retirement-plans/",
+      "phone": "877-677-3678",
+      "notes": "Strong presence in public-sector 457(b) and governmental plans."
+    },
+    {
+      "slug": "corebridge",
+      "name": "Corebridge Financial (formerly AIG Retirement / VALIC)",
+      "url": "https://www.corebridgefinancial.com/",
+      "findUrl": "https://www.corebridgefinancial.com/rs/find-your-plan",
+      "phone": "800-448-2542",
+      "notes": "Formerly VALIC and AIG Retirement Services. Common in healthcare, education, and public-sector 403(b) plans."
+    },
+    {
+      "slug": "milliman",
+      "name": "Milliman",
+      "url": "https://www.milliman.com/",
+      "findUrl": "https://retirement.milliman.com/",
+      "phone": "866-767-1212",
+      "notes": "Administers many large defined benefit pension plans as well as defined contribution plans."
+    }
+  ]
+}

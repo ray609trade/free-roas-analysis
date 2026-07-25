@@ -1,0 +1,56 @@
+name: QA
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# Deliberately uses NO external actions (no actions/checkout, no
+# actions/setup-node). Repositories can be configured to allow only local
+# actions, which makes a workflow depending on the marketplace fail before a
+# runner is even assigned. Cloning with git and using the runner's
+# preinstalled Node keeps this workflow runnable under the strictest setting.
+jobs:
+  qa:
+    name: Build & compliance gate
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the commit
+        env:
+          TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: |
+          git init -q .
+          git remote add origin "https://x-access-token:${TOKEN}@github.com/${REPO}.git"
+          git -c protocol.version=2 fetch -q --depth 1 origin "$SHA"
+          git checkout -q FETCH_HEAD
+          echo "Checked out $SHA"
+
+      - name: Show Node version
+        run: node --version
+
+      - name: Build site from the knowledge base
+        run: node build/build.js
+
+      - name: Fail if generated pages are out of date
+        # Generated pages are committed so the site can be served straight from
+        # the branch. If a rebuild changes anything, someone edited a template
+        # or data file without rebuilding, and the deployed pages would be stale.
+        run: |
+          if ! git diff --quiet; then
+            echo "::error::Generated files are out of date. Run 'node build/build.js' and commit the result."
+            git diff --stat
+            exit 1
+          fi
+          echo "Generated files are in sync."
+
+      - name: Run QA gate
+        # 54 checks across correctness, legal/compliance and quality. Fails on
+        # any regression: a broken free-claim disclosure, missing TCPA consent
+        # language, a leaked secret key, duplicate metadata, and so on.
+        run: node build/qa.js

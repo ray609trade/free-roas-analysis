@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#0b5d4a" />
+  <title>Confirm Your Plan — ReclaimWealth</title>
+  <meta name="description" content="Review your ReclaimWealth plan terms, including price, billing frequency, renewal and cancellation, before you are charged." />
+  <link rel="canonical" href="https://raysmgmt.com/checkout.html" />
+  <meta name="robots" content="noindex, follow" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="/assets/site.css" />
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+  <div class="bar"><div class="wrap"><a class="brand" href="/"><span class="mark" aria-hidden="true">R</span> ReclaimWealth</a></div></div>
+
+  <main class="legal-page" id="main" style="max-width:720px">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <ol><li><a href="/">Home</a></li><li><a href="/#pricing">Pricing</a></li><li>Confirm plan</li></ol>
+    </nav>
+
+    <h1>Confirm your plan</h1>
+    <p class="updated">Review these terms before you are charged. Nothing is charged on this page.</p>
+
+    <div class="free-notice">
+      <strong>You do not need to buy anything to find your money.</strong> Every registry is free to search and you can file any claim yourself at no cost. This plan buys our time and legwork only. If you would rather do it yourself, use our <a href="/disclosures.html">free links</a> and <a href="/states/">state guides</a>.
+    </div>
+
+    <!-- Plan summary, rendered from the PLANS catalogue -->
+    <div id="planBox" class="callout" style="border-left-color:var(--green)">
+      <p style="margin:0">Loading plan…</p>
+    </div>
+
+    <form id="checkoutForm" novalidate>
+      <h2>Where should we send your results?</h2>
+      <div class="row-2">
+        <div class="field">
+          <label for="firstName">First name</label>
+          <input id="firstName" type="text" autocomplete="given-name" required />
+        </div>
+        <div class="field">
+          <label for="lastName">Last name</label>
+          <input id="lastName" type="text" autocomplete="family-name" required />
+        </div>
+      </div>
+      <div class="field">
+        <label for="email">Email <span class="hint">— receipt and results go here</span></label>
+        <input id="email" type="email" autocomplete="email" required />
+      </div>
+
+      <h2>Plan terms</h2>
+      <div class="table-wrap">
+        <table class="fact-table" id="termsTable"></table>
+      </div>
+
+      <div class="consent-group">
+        <label class="consent" for="planConsent">
+          <input type="checkbox" id="planConsent" required />
+          <span id="planConsentText">I agree to these plan terms.</span>
+        </label>
+      </div>
+
+      <p class="err" id="checkoutErr" tabindex="-1" role="alert"></p>
+
+      <button type="submit" class="btn btn-green btn-lg" style="width:100%" id="payBtn">
+        Continue to secure payment →
+      </button>
+      <p style="text-align:center;font-size:.78rem;color:var(--slate);margin:12px 0 0">
+        🔒 Payment is processed by Stripe. ReclaimWealth never sees or stores your card details.
+      </p>
+      <p style="text-align:center;font-size:.78rem;color:var(--slate);margin:8px 0 0">
+        <a href="/terms.html#s7">Full subscription terms</a> ·
+        <a href="/terms.html#s8">Cancellation &amp; refunds</a> ·
+        <a href="/privacy.html">Privacy</a>
+      </p>
+    </form>
+
+    <div id="notConfigured" class="callout warn" hidden>
+      <p style="margin:0"><strong>Checkout is not connected yet.</strong> Payment links have not been configured for this plan. Please email <a href="mailto:info@rmgcredit.com">info@rmgcredit.com</a> and we will set you up directly.</p>
+    </div>
+
+    <p style="margin-top:32px"><a href="/#pricing">&larr; Back to pricing</a></p>
+  </main>
+
+  <footer class="site">
+    <div class="wrap">
+      <div class="disclaimer" style="border-top:0;padding-top:0">
+        <p>ReclaimWealth is an independent search-assistance service and is not a government agency. Every registry we reference is free to search, and you may file any claim yourself at no cost. We do not take custody of funds or file claims on your behalf.</p>
+        <p>© <span id="year"></span> ReclaimWealth. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/assets/integrations.js"></script>
+  <script src="/assets/site.js"></script>
+  <script>
+  /* =======================================================================
+     Checkout: capture express affirmative consent to the plan terms, log it
+     as evidence, push the record to the CRM, then hand off to Stripe.
+
+     No card data is ever handled here. The page's job is the consent record
+     that ROSCA and state automatic-renewal laws require.
+     ======================================================================= */
+  (function () {
+    var params = new URLSearchParams(window.location.search);
+    var planId = params.get("plan") || "full-sweep";
+    var plan = PLANS[planId];
+
+    var form = document.getElementById("checkoutForm");
+    var notConfigured = document.getElementById("notConfigured");
+
+    if (!plan) {
+      document.getElementById("planBox").innerHTML =
+        "<p style='margin:0'><strong>We couldn't find that plan.</strong> " +
+        "<a href='/#pricing'>Choose a plan</a> to continue.</p>";
+      form.hidden = true;
+      return;
+    }
+
+    /* ---- plan summary ---- */
+    document.getElementById("planBox").innerHTML =
+      "<p style='margin:0 0 .4em'><strong>" + plan.name + " — " + plan.price +
+      " " + plan.billing + "</strong></p><p style='margin:0'>" + plan.summary + "</p>";
+
+    /* ---- terms table: every disclosure required before charging ---- */
+    var rows = [
+      ["Plan", plan.name],
+      ["Price", plan.price + " " + plan.billing],
+      ["Billing", plan.recurring
+        ? "Charged today, then every " + plan.renewalPeriod + " until you cancel"
+        : "One-time charge. This plan does not renew."],
+      ["Renewal", plan.recurring
+        ? "Renews automatically each " + plan.renewalPeriod +
+          " at the then-current price until cancelled. We send renewal reminders and advance notice of any price change."
+        : "No automatic renewal"],
+      ["How to cancel", plan.recurring
+        ? "Anytime, online in one click from your account or any billing email — or email info@rmgcredit.com. No phone call required."
+        : "Not applicable — one-time purchase"],
+      ["Refunds", plan.recurring
+        ? "Current period refundable if you cancel within 7 days of the charge and have not used the service that period."
+        : "Refundable within 14 days if we have not yet delivered the completed work."],
+      ["What you get", "<ul style='margin:0;padding-left:1.1rem'>" +
+        plan.includes.map(function (i) { return "<li>" + i + "</li>"; }).join("") + "</ul>"]
+    ];
+    document.getElementById("termsTable").innerHTML =
+      rows.map(function (r) { return "<tr><th>" + r[0] + "</th><td>" + r[1] + "</td></tr>"; }).join("");
+
+    /* ---- consent text: versioned and verbatim, exactly as shown ---- */
+    var SUBSCRIPTION_CONSENT_VERSION = "2026-07-25.v1";
+    var consentText = plan.recurring
+      ? "I authorize ReclaimWealth to charge my payment method " + plan.price + " " + plan.billing +
+        ", and I understand this is a subscription that renews automatically each " + plan.renewalPeriod +
+        " at the then-current price until I cancel. I understand I may cancel at any time online without " +
+        "calling anyone, that I will receive renewal reminders and advance notice of any price change, and " +
+        "that I have read the Terms of Service and Privacy Policy. I understand that no purchase is " +
+        "required to search for or claim my own property."
+      : "I authorize ReclaimWealth to charge my payment method a one-time payment of " + plan.price +
+        " for the " + plan.name + " plan. I understand this is a single charge that does not renew, that " +
+        "I have read the Terms of Service and Privacy Policy, and that no purchase is required to search " +
+        "for or claim my own property.";
+
+    document.getElementById("planConsentText").textContent = consentText;
+
+    /* ---- if payments are not wired up, say so rather than failing ---- */
+    if (!paymentUrlFor(planId, "test@example.com", "probe")) {
+      form.hidden = true;
+      notConfigured.hidden = false;
+      return;
+    }
+
+    /* ---- submit ---- */
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var firstName = document.getElementById("firstName").value.trim();
+      var lastName = document.getElementById("lastName").value.trim();
+      var email = document.getElementById("email").value.trim();
+      var agreed = document.getElementById("planConsent").checked;
+      var err = document.getElementById("checkoutErr");
+
+      var problems = [];
+      if (!firstName) problems.push("your first name");
+      if (!lastName) problems.push("your last name");
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) problems.push("a valid email address");
+      if (!agreed) problems.push("your agreement to the plan terms");
+
+      if (problems.length) {
+        err.textContent = "Please add " + problems.join(", ") + ".";
+        err.style.display = "block";
+        err.focus();
+        return;
+      }
+      err.style.display = "none";
+
+      var clientRef = makeClientRef(email);
+      var record = {
+        event: "purchase_consent",
+        submittedAt: new Date().toISOString(),
+        name: firstName + " " + lastName,
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+        plan: planId,
+        planPrice: plan.price + " " + plan.billing,
+        clientReferenceId: clientRef,
+        consent: {
+          version: SUBSCRIPTION_CONSENT_VERSION,
+          page: window.location.href,
+          userAgent: navigator.userAgent,
+          subscriptionConsent: "YES",
+          subscriptionConsentText: consentText
+        }
+      };
+
+      /* Retain the consent record locally as a fallback, then push to CRM.
+         Redirect happens regardless so a CRM outage never blocks a purchase. */
+      try {
+        var saved = JSON.parse(localStorage.getItem("rw_purchase_consents") || "[]");
+        saved.push(record);
+        localStorage.setItem("rw_purchase_consents", JSON.stringify(saved));
+      } catch (e2) {}
+
+      var btn = document.getElementById("payBtn");
+      btn.disabled = true;
+      btn.textContent = "Taking you to secure payment…";
+
+      var go = function () {
+        window.location.href = paymentUrlFor(planId, email, clientRef);
+      };
+      sendToCrm(record).then(go, go);
+      setTimeout(go, 2500); /* never strand the user on a slow webhook */
+    });
+  })();
+  </script>
+</body>
+</html>

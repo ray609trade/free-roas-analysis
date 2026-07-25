@@ -177,8 +177,94 @@ function buildPayload(data) {
     /* --- FormSubmit control fields (harmless to other backends) --- */
     _subject: "New lost-account search: " + data.firstName + " " + data.lastName,
     _template: "table",
-    _captcha: "false"
+    _captcha: "false",
+    /* Sent automatically to the person who submitted the form. */
+    _autoresponse: autoresponderText(data)
   };
+}
+
+/* -------------------------------------------------------------------------
+   AUTORESPONDER — the first thing every lead receives from us.
+
+   Written to be genuinely useful on its own, because a meaningful share of
+   people will act on this email and never buy anything. That is the intended
+   outcome: the free-claim disclosure is a legal requirement under several
+   state finder statutes, and being the service that tells people the truth
+   is what makes the paid offer credible.
+
+   Plain text: FormSubmit's _autoresponse does not render HTML, and plain
+   text also lands in the inbox rather than the promotions tab.
+
+   Currently ~2.6k characters. If your provider truncates it, cut from the
+   bottom up: the four numbered steps are the payload, everything after them
+   is supporting material.
+   ------------------------------------------------------------------------- */
+function autoresponderText(data) {
+  var states = data.state ? data.state : "the states you listed";
+  var employers = data.employers.length
+    ? data.employers.join(", ")
+    : "the employers you listed";
+
+  return [
+    "Hi " + data.firstName + ",",
+    "",
+    "Here is your search plan. Work through it in order — all four are free,",
+    "and you can file any claim yourself at no cost.",
+    "",
+    "1) DOL RETIREMENT SAVINGS LOST & FOUND",
+    "   https://lostandfound.dol.gov/",
+    "   The federal database of plans looking for former participants.",
+    "   Heads up: it requires ID verification through Login.gov (SSN, date of",
+    "   birth, and a photo of your driver's license). It does not cover church",
+    "   or government plans, so an empty result is not the final word.",
+    "",
+    "2) STATE UNCLAIMED PROPERTY — start here if you want a quick win",
+    "   https://www.missingmoney.com/en/",
+    "   Public record, needs only your name, no ID check. Search every state",
+    "   you have lived or worked in (" + states + "), and search any maiden or",
+    "   former names too — records are filed under the name used at the time.",
+    "",
+    "3) NATIONAL REGISTRY OF UNCLAIMED RETIREMENT BENEFITS",
+    "   https://www.unclaimedretirementbenefits.com/",
+    "   Needs your SSN. Only covers employers who opted in, so treat it as a",
+    "   quick extra check rather than proof either way.",
+    "",
+    "4) FIND WHO HOLDS YOUR OLD PLAN NOW",
+    "   https://www.efast.dol.gov/5500Search/",
+    "   This is the step most people skip, and often the one that works.",
+    "   Search " + employers + " to see who administers the plan today — even",
+    "   if the company merged, was bought, or closed.",
+    "   Direct contacts for the big recordkeepers (Fidelity, Empower, Vanguard,",
+    "   Principal, Voya and more): https://raysmgmt.com/find/",
+    "",
+    "IF A PLAN WILL NOT RESPOND",
+    "   Free federal help from a DOL Benefits Advisor:",
+    "   https://www.dol.gov/agencies/ebsa/about-ebsa/ask-a-question/ask-ebsa",
+    "   Barely anyone uses this. It works.",
+    "",
+    "TWO THINGS WORTH KNOWING",
+    "   - In most states unclaimed property is held indefinitely. Nobody is",
+    "     about to take it. Anyone pressuring you to hurry is not being honest.",
+    "   - No legitimate service can look up your private balance from your name",
+    "     alone. Those are protected by law. If someone claims they already",
+    "     found your money, be sceptical.",
+    "",
+    "WANT US TO DO IT FOR YOU?",
+    "   Reply to this email and we will run the 50-state sweep and trace every",
+    "   employer you listed. Optional, flat fee, disclosed up front, and never",
+    "   a percentage of what you recover: https://raysmgmt.com/#pricing",
+    "",
+    "Either way, I hope you find it.",
+    "",
+    "— ReclaimWealth",
+    "   info@rmgcredit.com",
+    "",
+    "ReclaimWealth is an independent search-assistance service. We are not a",
+    "government agency and are not affiliated with the DOL, PBGC, IRS, any",
+    "state treasury, or any retirement plan or financial institution. We do",
+    "not take custody of funds, do not file claims on your behalf, and do not",
+    "give financial, tax, or legal advice."
+  ].join("\n");
 }
 
 function submitLead(data) {

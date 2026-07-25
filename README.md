@@ -142,6 +142,24 @@ Set `ga4MeasurementId` or `plausibleDomain` in the same file. Events emitted:
 The QA gate enforces these on every build, so a regression fails the build rather
 than reaching production.
 
+## Continuous integration
+
+Two workflows run in GitHub Actions:
+
+- **`qa.yml`** — on every push and PR: rebuilds the site, fails if the committed
+  generated pages are out of date, then runs the 54-check QA gate. Compliance
+  regressions (missing free-claim disclosure, stripped TCPA language, a leaked
+  secret key) fail the build instead of reaching the site.
+- **`link-check.yml`** — weekly and whenever `data/` changes: verifies every
+  external URL still resolves and opens/updates an issue if any break. GitHub's
+  runners have open network access, so this covers the URL verification that
+  cannot run in a restricted sandbox.
+
+The build is deterministic — dates come from `_meta` fields in `data/`, never the
+system clock — so a rebuild only changes files when content actually changed.
+**When you edit `data/` or a template, run `node build/build.js` and commit the
+generated output**, or CI will fail the sync check.
+
 ## Before launch
 
 1. Replace bracketed placeholders: legal entity name, mailing address, state of

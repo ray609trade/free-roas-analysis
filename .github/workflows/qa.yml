@@ -1,0 +1,42 @@
+name: QA
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  qa:
+    name: Build & compliance gate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Build site from the knowledge base
+        run: node build/build.js
+
+      - name: Fail if generated pages are out of date
+        # Generated pages are committed so the site can be served straight from
+        # the branch. If a rebuild changes anything, someone edited a template
+        # or data file without rebuilding — the deployed pages would be stale.
+        run: |
+          if ! git diff --quiet; then
+            echo "::error::Generated files are out of date. Run 'node build/build.js' and commit the result."
+            git diff --stat
+            exit 1
+          fi
+          echo "Generated files are in sync."
+
+      - name: Run QA gate
+        # 54 checks: correctness, legal/compliance, and quality.
+        # Fails the build on any regression — a broken free-claim disclosure,
+        # missing TCPA language, a leaked secret key, duplicate metadata, etc.
+        run: node build/qa.js

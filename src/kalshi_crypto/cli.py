@@ -256,6 +256,54 @@ def _cmd_live(args: argparse.Namespace) -> int:
     return 0
 
 
+def _cmd_prices(args: argparse.Namespace) -> int:
+    """Live prices + a committed up/down call. The simplest useful thing."""
+    import asyncio
+
+    from .live import CoinbasePollFeed, LiveEngine, SyntheticFeed, render_prices
+    from .venues import resolve
+
+    assets = tuple(a.strip().upper() for a in args.assets.split(",") if a.strip())
+    engine = LiveEngine(
+        contexts=[resolve(a, "coinbase", "spot") for a in assets],
+        auto_trade=False,                      # watching only, nothing simulated
+        call_after_s=args.call_after * 60.0,
+        call_deadline_s=args.call_deadline * 60.0,
+    )
+
+    if args.demo:
+        feed = SyntheticFeed(assets=assets, speed=args.speed, duration_s=86_400.0)
+        print("DEMO -- synthetic prices, not real market data.\n")
+    else:
+        feed = CoinbasePollFeed(assets=assets, interval_s=args.interval)
+        print(f"Connecting to Coinbase public ticker ({', '.join(assets)})... "
+              f"Ctrl-C to stop.\n")
+
+    async def run() -> None:
+        last = 0.0
+        async for tick in feed.stream():
+            engine.on_price(tick.asset, tick.price, tick.timestamp)
+            now = tick.timestamp.timestamp()
+            if now - last >= args.refresh:
+                print("\033[2J\033[H" + render_prices(engine, tick.timestamp), flush=True)
+                last = now
+
+    try:
+        asyncio.run(run())
+    except KeyboardInterrupt:
+        print("\n" + render_prices(engine))
+    except RuntimeError as exc:
+        print(f"\n{exc}", file=sys.stderr)
+        return 1
+    except Exception as exc:  # noqa: BLE001
+        print(f"\nfeed error: {exc}\n\nIf this is a connection failure, this "
+              "machine cannot reach api.exchange.coinbase.com. Try "
+              "`kxc prices --demo` to check the app itself works.",
+              file=sys.stderr)
+        return 1
+    return 0
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         prog="kxc", description="Kalshi 15-minute crypto research stack"
@@ -326,6 +374,24 @@ def build_parser() -> argparse.ArgumentParser:
     p_replay.add_argument("--duration", type=float, default=7200.0,
                           help="simulated seconds to run")
     p_replay.set_defaults(func=_cmd_replay)
+
+    p_prices = sub.add_parser(
+        "prices", help="live prices + 15-min up/down call (start here)"
+    )
+    p_prices.add_argument("--assets", default="BTC,ETH,XRP")
+    p_prices.add_argument("--interval", type=float, default=1.0,
+                          help="seconds between price polls")
+    p_prices.add_argument("--refresh", type=float, default=2.0,
+                          help="seconds between screen redraws")
+    p_prices.add_argument("--call-after", type=float, default=4.0,
+                          help="minutes into the window before locking a call")
+    p_prices.add_argument("--call-deadline", type=float, default=9.0,
+                          help="minutes into the window by which a call is forced")
+    p_prices.add_argument("--demo", action="store_true",
+                          help="synthetic prices, no network")
+    p_prices.add_argument("--speed", type=float, default=60.0,
+                          help="demo only: simulated seconds per real second")
+    p_prices.set_defaults(func=_cmd_prices)
 
     p_live = sub.add_parser("live", help="live market data, paper trading only")
     _engine_args(p_live)

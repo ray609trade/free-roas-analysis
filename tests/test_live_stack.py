@@ -457,3 +457,80 @@ async def test_synthetic_feed_drives_the_engine_offline():
     assert ticks > 300
     assert engine.current_quotes()
     assert engine.results, "windows should have closed and been scored"
+
+
+class TestLockedCall:
+    """The call must be committed early, while the outcome is still open."""
+
+    def _engine(self, **kw) -> LiveEngine:
+        from kalshi_crypto.live import LiveEngine as LE
+
+        return LE(contexts=[resolve("BTC", "coinbase", "spot")], auto_trade=False, **kw)
+
+    def _feed(self, engine, *, minutes: float, drift_per_s: float = 0.0) -> datetime:
+        base = datetime(2026, 8, 7, 12, 0, tzinfo=UTC)
+        last = base
+        for i in range(0, int(minutes * 60), 2):
+            last = base + timedelta(seconds=i)
+            engine.on_price("BTC", 64_000.0 + drift_per_s * i, last)
+        return last
+
+    def test_no_call_before_the_band_opens(self):
+        engine = self._engine(call_after_s=240.0, call_deadline_s=540.0)
+        self._feed(engine, minutes=3.0, drift_per_s=2.0)
+        assert engine.current_calls() == []
+
+    def test_call_locks_inside_the_band(self):
+        engine = self._engine(call_after_s=240.0, call_deadline_s=540.0)
+        self._feed(engine, minutes=8.0, drift_per_s=2.0)
+        calls = engine.current_calls()
+        assert len(calls) == 1
+        call = calls[0]
+        assert call.side == "UP"                     # price rose all window
+        assert 4.0 <= call.minutes_into_window <= 9.0
+
+    def test_call_is_forced_by_the_deadline_even_when_uncertain(self):
+        """A flat market never clears the confidence gate; commit anyway."""
+        engine = self._engine(call_after_s=240.0, call_deadline_s=540.0)
+        self._feed(engine, minutes=10.0, drift_per_s=0.0)
+        calls = engine.current_calls()
+        assert len(calls) == 1
+        assert calls[0].minutes_into_window <= 9.5
+        assert calls[0].side in ("UP", "DOWN")
+
+    def test_call_does_not_change_once_locked(self):
+        """Revising until the bell would make hindsight look like foresight."""
+        engine = self._engine(call_after_s=240.0, call_deadline_s=540.0)
+        self._feed(engine, minutes=6.0, drift_per_s=3.0)
+        locked = engine.current_calls()[0]
+        # Now slam the price the other way for the rest of the window.
+        base = datetime(2026, 8, 7, 12, 0, tzinfo=UTC)
+        for i in range(360, 880, 2):
+            engine.on_price("BTC", 64_000.0 - i * 5.0, base + timedelta(seconds=i))
+        still = engine.current_calls()[0]
+        assert still.side == locked.side
+        assert still.prob_up == locked.prob_up
+
+    def test_completed_calls_are_scored_against_the_outcome(self):
+        engine = self._engine(call_after_s=240.0, call_deadline_s=540.0)
+        self._feed(engine, minutes=17.0, drift_per_s=2.0)
+        assert engine.calls, "the window should have closed and scored the call"
+        call, outcome_up = engine.calls[0]
+        assert outcome_up is True
+        assert call.was_right(outcome_up)
+        assert engine.call_accuracy == 1.0
+
+    def test_a_fresh_call_is_made_each_window(self):
+        engine = self._engine(call_after_s=240.0, call_deadline_s=540.0)
+        self._feed(engine, minutes=32.0, drift_per_s=1.0)
+        assert len(engine.calls) >= 1
+        windows = [c.window_label for c, _ in engine.calls]
+        assert len(windows) == len(set(windows))
+
+    def test_prices_view_renders(self):
+        from kalshi_crypto.live import render_prices
+
+        engine = self._engine()
+        last = self._feed(engine, minutes=8.0, drift_per_s=2.0)
+        out = render_prices(engine, last)
+        assert "BTC" in out and "UP/DOWN CALL" in out

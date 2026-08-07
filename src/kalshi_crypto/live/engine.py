@@ -30,6 +30,33 @@ __all__ = ["LiveEngine", "WindowResult", "render_table"]
 
 
 @dataclass(frozen=True)
+class LockedCall:
+    """A committed up/down call, frozen partway through the window.
+
+    Locking matters for honesty. A model that keeps revising until the bell
+    always looks prescient in hindsight, because by then most of the answer is
+    already in the price. Freezing the call early -- while the outcome is still
+    genuinely uncertain -- is the only version worth scoring.
+    """
+
+    asset: str
+    window_label: str
+    side: str            # "UP" | "DOWN"
+    prob_up: float
+    price_at_call: float
+    strike: float
+    seconds_into_window: float
+    confidence: float
+
+    @property
+    def minutes_into_window(self) -> float:
+        return self.seconds_into_window / 60.0
+
+    def was_right(self, outcome_up: bool) -> bool:
+        return (self.side == "UP") == outcome_up
+
+
+@dataclass(frozen=True)
 class WindowResult:
     asset: str
     venue: str
@@ -51,6 +78,7 @@ class _AssetState:
     last_sample_t: float | None = None
     quote: UpDownQuote | None = None
     traded_window: str | None = None
+    call: LockedCall | None = None
 
 
 @dataclass
@@ -64,7 +92,13 @@ class LiveEngine:
     settlement_window: SettlementWindow = field(default_factory=SettlementWindow)
     auto_trade: bool = True
     trade_size: int = 100
+    # Commit a call between these two marks into the 15-minute window. The
+    # default 4-9 minute band leaves 6-11 minutes of unresolved outcome, so the
+    # call is a real prediction rather than a readout of what already happened.
+    call_after_s: float = 240.0
+    call_deadline_s: float = 540.0
     results: list[WindowResult] = field(default_factory=list)
+    calls: list[tuple[LockedCall, bool]] = field(default_factory=list)
     _state: dict[str, _AssetState] = field(default_factory=dict, init=False)
 
     def __post_init__(self) -> None:
@@ -122,10 +156,45 @@ class LiveEngine:
             partial=state.partial if state.context.pricing_mode == PRICING_AVERAGE else None,
         )
         state.quote = quote
+        self._maybe_lock_call(state, quote, window.seconds_elapsed(now))
 
         if self.auto_trade:
             self._maybe_trade(state, quote, now)
         return quote
+
+    def _maybe_lock_call(
+        self, state: _AssetState, quote: UpDownQuote, elapsed_s: float
+    ) -> None:
+        """Freeze the call once inside the decision band.
+
+        Before ``call_after_s`` there is not enough of the window resolved to
+        say much. After ``call_deadline_s`` we commit regardless, because a call
+        that waits for certainty is not a prediction. Between the two we take
+        the first moment the model clears its own confidence gate.
+        """
+        if state.call is not None and state.call.window_label == quote.window_label:
+            return
+        if elapsed_s < self.call_after_s:
+            return
+
+        past_deadline = elapsed_s >= self.call_deadline_s
+        if not past_deadline and not quote.tradable:
+            return  # still inside the band; wait for a firmer read
+
+        state.call = LockedCall(
+            asset=quote.asset,
+            window_label=quote.window_label,
+            side=quote.side,
+            prob_up=quote.prob_up,
+            price_at_call=quote.price,
+            strike=quote.strike,
+            seconds_into_window=elapsed_s,
+            confidence=quote.confidence,
+        )
+        self.tracker.record(
+            asset=quote.asset, venue=quote.venue,
+            window_label=quote.window_label, prob_up=quote.prob_up,
+        )
 
     def _maybe_trade(self, state: _AssetState, quote: UpDownQuote, now: datetime) -> None:
         """One paper position per window, taken only when the gate opens."""
@@ -180,11 +249,77 @@ class LiveEngine:
             pnl=pnl,
         ))
 
+        if state.call is not None and state.call.window_label == window.label():
+            self.calls.append((state.call, outcome_up))
+        state.call = None
         state.partial = PartialAverage()
         state.last_sample_t = None
 
+    @property
+    def call_accuracy(self) -> float | None:
+        """Hit rate of locked calls -- the number that actually matters."""
+        if not self.calls:
+            return None
+        return sum(1 for call, up in self.calls if call.was_right(up)) / len(self.calls)
+
+    def current_calls(self) -> list[LockedCall]:
+        return [s.call for s in self._state.values() if s.call is not None]
+
     def current_quotes(self) -> list[UpDownQuote]:
         return [s.quote for s in self._state.values() if s.quote is not None]
+
+
+def render_prices(engine: LiveEngine, now: datetime | None = None) -> str:
+    """Minimal view: live price, the window, and the committed up/down call."""
+    now = now or datetime.now(UTC)
+    quotes = sorted(engine.current_quotes(), key=lambda q: q.asset)
+    calls = {c.asset: c for c in engine.current_calls()}
+
+    lines = [
+        f"  {now:%H:%M:%S}Z   LIVE PRICES + 15-MIN UP/DOWN CALL",
+        "",
+        f"  {'':<5} {'PRICE':>12} {'STRIKE':>12} {'MOVE':>9} "
+        f"{'CLOSES':>8}  {'LIVE':>13}  CALL",
+        "  " + "-" * 86,
+    ]
+    if not quotes:
+        lines.append("  connecting... need ~30 samples (about 30s) before the first read")
+
+    for q in quotes:
+        move = (q.price - q.strike) / q.strike * 100 if q.strike else 0.0
+        call = calls.get(q.asset)
+        if call is None:
+            mins = (900 - q.seconds_to_close) / 60.0
+            call_text = f"pending (locks at {engine.call_after_s/60:.0f}m, now {mins:.1f}m)"
+        else:
+            mark = "UP  " if call.side == "UP" else "DOWN"
+            call_text = (
+                f"{mark} {call.prob_up:5.1%} @ {call.minutes_into_window:.1f}m"
+            )
+        lines.append(
+            f"  {q.asset:<5} {q.price:>12,.4f} {q.strike:>12,.4f} {move:>+8.3f}% "
+            f"{q.seconds_to_close:>7.0f}s  {q.prob_up:>6.1%} up   {call_text}"
+        )
+
+    if engine.calls:
+        acc = engine.call_accuracy or 0.0
+        recent = engine.calls[-6:]
+        lines.append("")
+        lines.append(f"  COMPLETED CALLS: {len(engine.calls)}   hit rate {acc:.0%}")
+        for call, outcome_up in recent:
+            verdict = "HIT " if call.was_right(outcome_up) else "MISS"
+            actual = "up" if outcome_up else "down"
+            lines.append(
+                f"    {verdict}  {call.asset:<4} {call.window_label:<14} "
+                f"called {call.side:<4} at {call.minutes_into_window:.1f}m "
+                f"({call.prob_up:.0%} up)  ->  actually {actual}"
+            )
+        if len(engine.calls) < 30:
+            lines.append(
+                f"    ({len(engine.calls)} calls is far too few to judge -- "
+                "expect ~50% early, and give it days before drawing conclusions)"
+            )
+    return "\n".join(lines)
 
 
 def render_table(engine: LiveEngine, now: datetime | None = None) -> str:

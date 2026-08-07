@@ -75,6 +75,61 @@ class SyntheticFeed:
 
 
 @dataclass
+class CoinbasePollFeed:
+    """Live prices from Coinbase's public REST ticker. No API key required.
+
+    Why polling rather than a WebSocket: for a 15-minute decision, one sample
+    per second is far more resolution than the question needs, and a poll loop
+    has dramatically fewer failure modes than a socket that has to detect
+    half-open connections and resubscribe after a drop. Fewer moving parts is
+    worth more here than latency you cannot use.
+
+    A failed poll is skipped, not fatal -- a dropped sample is a non-event, and
+    killing the run over one HTTP hiccup would be worse than missing it.
+    """
+
+    assets: tuple[str, ...] = ("BTC", "ETH", "XRP")
+    interval_s: float = 1.0
+    timeout_s: float = 5.0
+    url = "https://api.exchange.coinbase.com/products/{product}/ticker"
+
+    async def stream(self) -> AsyncIterator[PriceTick]:
+        import asyncio
+
+        import httpx
+
+        products = {a: f"{a}-USD" for a in self.assets}
+        consecutive_failures = 0
+
+        async with httpx.AsyncClient(timeout=self.timeout_s) as client:
+            while True:
+                got_any = False
+                for asset, product in products.items():
+                    try:
+                        resp = await client.get(self.url.format(product=product))
+                        resp.raise_for_status()
+                        price = float(resp.json()["price"])
+                    except Exception:  # noqa: BLE001 - a skipped sample is fine
+                        continue
+                    if price > 0:
+                        got_any = True
+                        yield PriceTick(asset, price, datetime.now(UTC))
+
+                if got_any:
+                    consecutive_failures = 0
+                else:
+                    consecutive_failures += 1
+                    # Surface a persistent outage rather than spinning forever
+                    # looking like it is working.
+                    if consecutive_failures == 10:
+                        raise RuntimeError(
+                            "no price data from Coinbase after 10 attempts -- "
+                            "check network access to api.exchange.coinbase.com"
+                        )
+                await asyncio.sleep(self.interval_s)
+
+
+@dataclass
 class ExchangeFeed:
     """Real market data, routed so the feed matches the venue being traded.
 

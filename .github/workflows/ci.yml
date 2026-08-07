@@ -1,0 +1,59 @@
+name: CI
+
+on:
+  push:
+    branches: ["main", "claude/**"]
+  pull_request:
+    branches: ["main"]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11", "3.12"]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+
+      - name: Install
+        run: pip install -e ".[dev,db]"
+
+      # The whole suite runs offline. Nothing here reaches Kalshi or any
+      # exchange -- network adapters are exercised against replayed events.
+      # The TimescaleDB test skips unless KALSHI_TEST_DATABASE_URL is set.
+      - name: Test
+        run: pytest -q
+
+      - name: CLI smoke test
+        run: |
+          kxc fees
+          kxc schema
+          kxc settle --price 64420 --strike 64400 --sigma 3
+          kxc quote --fair 0.52 --to-close 600 --bid 48 --ask 52
+          kxc backtest --markets 200
+
+  # The leakage gate is the acceptance criterion for the whole backtester: a
+  # random strategy must lose exactly its costs and nothing more. Run it on its
+  # own so a failure here is unmistakable rather than one line in a test log.
+  leakage-gate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -e ".[dev]"
+      - name: Random strategy must not show an edge
+        run: pytest -q -m slow tests/test_backtest.py

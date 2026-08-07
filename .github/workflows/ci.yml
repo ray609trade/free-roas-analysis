@@ -1,10 +1,27 @@
 name: CI
 
+# Automatic triggers are OFF, and not because the workflow is broken.
+#
+# GitHub Actions cannot allocate a hosted runner for this account. Every run in
+# this repository's history -- including a different workflow on an unrelated
+# branch from 2026-07-25, two weeks before this one existed -- fails ~3 seconds
+# after creation with runner_id 0, an empty runner name, and no log to download.
+# Nothing executes, so every check is a guaranteed red that carries no
+# information, on every single push.
+#
+# TO RE-ENABLE: fix the account (Settings -> Actions -> General, and
+# Billing -> Spending limit), then delete this block and restore:
+#
+#   on:
+#     push:
+#       branches: ["main", "claude/**"]
+#     pull_request:
+#       branches: ["main"]
+#
+# The jobs below are known good -- every step was verified locally before this
+# was committed. Run it by hand any time from the Actions tab.
 on:
-  push:
-    branches: ["main", "claude/**"]
-  pull_request:
-    branches: ["main"]
+  workflow_dispatch:
 
 concurrency:
   group: ci-${{ github.ref }}

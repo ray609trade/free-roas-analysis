@@ -44,6 +44,10 @@ class Settings:
     private_key_pem: bytes | None = None
     allow_live_orders: bool = False
     database_url: str | None = None
+    # Master switch. On by default: no order reaches any exchange, demo
+    # included. The live engine trades through PaperBroker, which holds no
+    # credentials and opens no sockets, so this is belt and braces.
+    paper_only: bool = True
 
     @property
     def rest_base(self) -> str:
@@ -59,6 +63,13 @@ class Settings:
 
     def require_order_permission(self) -> None:
         """Gate for any code path that can create or cancel a real order."""
+        if self.paper_only:
+            raise LiveTradingNotEnabled(
+                "PAPER_ONLY is on: this system does not place exchange orders. "
+                "Simulated trading runs through PaperBroker. To send real "
+                "orders you must deliberately set KALSHI_PAPER_ONLY=0 -- and "
+                "you should not do that until the 60-day paper record says so."
+            )
         if self.is_live and not self.allow_live_orders:
             raise LiveTradingNotEnabled(
                 "Refusing to send orders to the production exchange. "
@@ -97,4 +108,5 @@ def load_settings(env: dict[str, str] | None = None) -> Settings:
         private_key_pem=pem,
         allow_live_orders=env.get("KALSHI_ALLOW_LIVE_ORDERS") == "1",
         database_url=env.get("KALSHI_DATABASE_URL"),
+        paper_only=env.get("KALSHI_PAPER_ONLY", "1") != "0",
     )

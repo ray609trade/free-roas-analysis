@@ -152,6 +152,110 @@ def _cmd_schema(_: argparse.Namespace) -> int:
     return 0
 
 
+def _cmd_venues(_: argparse.Namespace) -> int:
+    from .venues import VENUES, resolve
+
+    print("Routing table -- the feed is chosen by the venue, never by hand.\n")
+    for spec in VENUES.values():
+        print(f"{spec.name}")
+        print(f"  offers      : {', '.join(spec.kinds)}  on  {', '.join(spec.assets)}")
+        print(f"  signal feed : {spec.signal_source}")
+        print(f"  pricing     : {spec.pricing_mode}")
+        print(f"  settles on  : {spec.settles_on}")
+        if spec.notes:
+            print(f"  note        : {spec.notes}")
+        print()
+    ctx = resolve("BTC", "kalshi", "binary_15m")
+    print("Example:")
+    print("  " + ctx.describe().replace("\n", "\n  "))
+    return 0
+
+
+def _build_engine(args: argparse.Namespace):
+    from .live import LiveEngine
+    from .paper import PaperBroker
+    from .signals import DirectionalModel
+    from .venues import resolve
+
+    assets = [a.strip().upper() for a in args.assets.split(",") if a.strip()]
+    contexts = [resolve(a, args.venue, args.kind) for a in assets]
+    return LiveEngine(
+        contexts=contexts,
+        model=DirectionalModel(),
+        broker=PaperBroker(starting_bankroll=args.bankroll),
+        auto_trade=not args.no_trade,
+        trade_size=args.size,
+    )
+
+
+async def _drive(engine, feed, refresh_s: float, quiet: bool) -> None:
+    from .live import render_table
+
+    last_render = 0.0
+    async for tick in feed.stream():
+        engine.on_price(tick.asset, tick.price, tick.timestamp)
+        stamp = tick.timestamp.timestamp()
+        if not quiet and stamp - last_render >= refresh_s:
+            print("\033[2J\033[H" + render_table(engine, tick.timestamp), flush=True)
+            last_render = stamp
+
+
+def _cmd_replay(args: argparse.Namespace) -> int:
+    """Offline simulation -- the full engine with no network and no account."""
+    import asyncio
+
+    from .live import SyntheticFeed, render_table
+
+    engine = _build_engine(args)
+    feed = SyntheticFeed(
+        assets=tuple(q.instrument.asset for q in engine.contexts),
+        seed=args.seed, speed=args.speed, duration_s=args.duration,
+    )
+    print(f"REPLAY -- synthetic prices, no network, no real funds. "
+          f"{args.duration/60:.0f} simulated minutes at {args.speed:.0f}x.\n")
+    try:
+        asyncio.run(_drive(engine, feed, args.refresh, args.quiet))
+    except KeyboardInterrupt:
+        pass
+    print(render_table(engine))
+    print("\nNOTE: synthetic prices are a driftless random walk. This proves the "
+          "pipeline runs; it proves nothing about edge.")
+    return 0
+
+
+def _cmd_live(args: argparse.Namespace) -> int:
+    """Live market data, paper trading only."""
+    import asyncio
+
+    from .config import load_settings
+    from .live import ExchangeFeed, render_table
+
+    settings = load_settings()
+    if not settings.paper_only:
+        print("Refusing to start: KALSHI_PAPER_ONLY=0. This command is paper only.",
+              file=sys.stderr)
+        return 2
+
+    engine = _build_engine(args)
+    source = engine.contexts[0].signal_source
+    feed = ExchangeFeed(
+        assets=tuple(c.instrument.asset for c in engine.contexts),
+        signal_source=source,
+    )
+    print(f"LIVE market data via {source} -- PAPER trading, no real funds.\n")
+    try:
+        asyncio.run(_drive(engine, feed, args.refresh, args.quiet))
+    except KeyboardInterrupt:
+        print("\nstopped.")
+    except Exception as exc:  # noqa: BLE001
+        print(f"\nfeed error: {exc}\n\nIf this is a connection failure, this "
+              "machine has no route to the exchange. Run `kxc replay` to "
+              "exercise the same engine offline.", file=sys.stderr)
+        return 1
+    print(render_table(engine))
+    return 0
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         prog="kxc", description="Kalshi 15-minute crypto research stack"
@@ -199,6 +303,34 @@ def build_parser() -> argparse.ArgumentParser:
     p_quote.set_defaults(func=_cmd_quote)
 
     sub.add_parser("schema", help="path to schema.sql").set_defaults(func=_cmd_schema)
+    sub.add_parser("venues", help="show venue routing").set_defaults(func=_cmd_venues)
+
+    def _engine_args(p: argparse.ArgumentParser) -> None:
+        p.add_argument("--assets", default="BTC,ETH,XRP")
+        p.add_argument("--venue", default="kalshi",
+                       choices=["kalshi", "coinbase", "crypto_com"])
+        p.add_argument("--kind", default="binary_15m",
+                       choices=["binary_15m", "perp", "spot"])
+        p.add_argument("--bankroll", type=float, default=1000.0)
+        p.add_argument("--size", type=int, default=100)
+        p.add_argument("--no-trade", action="store_true",
+                       help="quote only; place no paper trades")
+        p.add_argument("--refresh", type=float, default=5.0)
+        p.add_argument("--quiet", action="store_true")
+
+    p_replay = sub.add_parser("replay", help="offline simulation, no network")
+    _engine_args(p_replay)
+    p_replay.add_argument("--seed", type=int, default=42)
+    p_replay.add_argument("--speed", type=float, default=120.0,
+                          help="simulated seconds per real second")
+    p_replay.add_argument("--duration", type=float, default=7200.0,
+                          help="simulated seconds to run")
+    p_replay.set_defaults(func=_cmd_replay)
+
+    p_live = sub.add_parser("live", help="live market data, paper trading only")
+    _engine_args(p_live)
+    p_live.set_defaults(func=_cmd_live)
+
     return parser
 
 

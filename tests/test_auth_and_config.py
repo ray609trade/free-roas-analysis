@@ -137,18 +137,20 @@ class TestSettings:
         with pytest.raises(ValueError):
             load_settings({"KALSHI_ENV": "staging"})
 
-    def test_demo_orders_are_always_allowed(self):
-        load_settings({}).require_order_permission()  # does not raise
+    def test_demo_orders_allowed_once_paper_only_is_disabled(self):
+        load_settings({"KALSHI_PAPER_ONLY": "0"}).require_order_permission()
 
     def test_prod_orders_blocked_without_explicit_opt_in(self):
-        settings = load_settings({"KALSHI_ENV": "prod"})
+        settings = load_settings({"KALSHI_ENV": "prod", "KALSHI_PAPER_ONLY": "0"})
         with pytest.raises(LiveTradingNotEnabled):
             settings.require_order_permission()
 
     def test_prod_orders_allowed_with_both_opt_ins(self):
-        settings = load_settings(
-            {"KALSHI_ENV": "prod", "KALSHI_ALLOW_LIVE_ORDERS": "1"}
-        )
+        settings = load_settings({
+            "KALSHI_ENV": "prod",
+            "KALSHI_ALLOW_LIVE_ORDERS": "1",
+            "KALSHI_PAPER_ONLY": "0",
+        })
         settings.require_order_permission()  # does not raise
 
     def test_missing_credentials_raises(self):

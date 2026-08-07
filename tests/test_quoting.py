@@ -173,7 +173,7 @@ class TestProductionGate:
                 sent.append(order)
                 return {"order": order}
 
-        eng = QuotingEngine(settings=Settings(environment="demo"))
+        eng = QuotingEngine(settings=Settings(environment="demo", paper_only=False))
         plan = eng.plan(
             fair_value=0.5, seconds_to_close=600.0,
             market_bid_cents=48, market_ask_cents=52,
@@ -192,7 +192,7 @@ class TestProductionGate:
                 return {}
 
         eng = QuotingEngine(
-            settings=Settings(environment="demo"),
+            settings=Settings(environment="demo", paper_only=False),
             policy=InventoryPolicy(max_position=500, flatten_threshold=400),
         )
         eng.inventory.position = 450

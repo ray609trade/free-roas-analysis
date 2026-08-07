@@ -22,19 +22,76 @@ What it does instead: compute a probability from live data, compare it to the
 market price, and keep an auditable calibration record of whether it was ever
 actually right.
 
+## Paper only — real orders are structurally impossible
+
+`KALSHI_PAPER_ONLY` defaults to **on**, and it blocks order placement on *every*
+environment including demo. The live engine trades through `PaperBroker`, which
+holds no credentials and opens no sockets — there is no code path from the
+running app to a real exchange order. Turning it off takes a deliberate
+`KALSHI_PAPER_ONLY=0`, and even then production needs two further opt-ins.
+
 ## Quick start
 
 ```bash
 pip install -e ".[dev,db]"
-pytest                          # 132 tests, no network required
+pytest                          # 178 tests, no network required
 ```
 
+**Run it right now, offline** — the full engine on synthetic prices:
+
 ```bash
+kxc replay --speed 120          # 2 simulated hours in ~1 minute
+```
+
+**Run it on live market data** (paper trading, needs network):
+
+```bash
+kxc live --venue kalshi   --kind binary_15m --assets BTC,ETH,XRP
+kxc live --venue coinbase --kind perp       --assets BTC,ETH
+```
+
+Both print a live table: the up/down price per asset per 15-minute window, a
+confidence range, whether the model thinks it's worth acting on, your paper P&L,
+and a running calibration score.
+
+```
+  ASSET VENUE       WINDOW             T-       UP    DOWN           RANGE  STATUS
+  BTC   kalshi      03:45-04:00Z     183s    0.7%  99.3%   0.4%-  1.1%  ** DOWN **
+  ETH   kalshi      03:45-04:00Z     183s   97.5%   2.5%  96.5%- 98.3%  ** UP **
+  XRP   kalshi      03:45-04:00Z     183s   99.7%   0.3%  99.5%- 99.9%  ** UP **
+```
+
+Other commands:
+
+```bash
+kxc venues                      # the routing table (see below)
 kxc fees                        # the fee table that drives the architecture
 kxc settle --price 64420 --strike 64400 --sigma 3
 kxc backtest --markets 400      # runs the leakage check first
-kxc quote --fair 0.52 --to-close 600 --bid 48 --ask 52
 ```
+
+## The signal always matches the venue you trade on
+
+This is enforced, not documented. Pick a venue and the feed, settlement rule,
+and pricing formula are chosen for you — `kxc venues` shows the table.
+
+| Venue | Instrument | Price feed | Resolves on | Formula |
+|---|---|---|---|---|
+| Kalshi | `binary_15m` | **index basket mirror** | 60-second average | `σ√(T/3)` |
+| Coinbase | `spot`, `perp` | Coinbase's own book | endpoint at close | `σ√T` |
+| Crypto.com | `spot`, `perp` | Crypto.com's own book | endpoint at close | `σ√T` |
+
+Two mistakes this prevents:
+
+- **Predicting Coinbase and trading Kalshi.** Kalshi settles on an index basket
+  that doesn't even include Binance. That mismatch is an unintended basis bet,
+  and it's silent until settlement disagrees with you.
+- **Using the average formula on a perp.** A binary settles on a 60-second
+  average; a perp resolves on the endpoint. Same inputs, ~42% different standard
+  deviation. Using the wrong one makes you overconfident exactly when it costs.
+
+`resolve()` raises on an invalid combination rather than falling back, and
+`assert_feed_matches()` refuses to price a contract from the wrong feed.
 
 ## The two findings that matter most
 

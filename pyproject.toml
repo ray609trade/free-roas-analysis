@@ -1,0 +1,34 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "kalshi-crypto"
+version = "0.1.0"
+description = "Kalshi 15-minute crypto up/down research stack: settlement-window model, fee-accurate backtester, maker quoting engine"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+dependencies = [
+    "cryptography>=41",
+    "httpx>=0.27",
+    "websockets>=12",
+]
+
+[project.optional-dependencies]
+db = ["psycopg[binary]>=3.1"]
+dev = ["pytest>=8", "pytest-asyncio>=0.23"]
+
+[project.scripts]
+kxc = "kalshi_crypto.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+kalshi_crypto = ["storage/*.sql"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+markers = ["slow: long-running statistical convergence tests"]
+filterwarnings = ["error::DeprecationWarning"]

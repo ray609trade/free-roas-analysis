@@ -1,0 +1,26 @@
+services:
+  timescaledb:
+    image: timescale/timescaledb:latest-pg16
+    container_name: kxc-timescaledb
+    environment:
+      POSTGRES_DB: kalshi
+      POSTGRES_USER: kalshi
+      # Local development only. Do not reuse this anywhere real.
+      POSTGRES_PASSWORD: kalshi
+    ports:
+      - "5432:5432"
+    volumes:
+      - timescale_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U kalshi -d kalshi"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  timescale_data:
+
+# Apply the schema once the container is healthy:
+#
+#   export KALSHI_DATABASE_URL=postgresql://kalshi:kalshi@localhost:5432/kalshi
+#   psql "$KALSHI_DATABASE_URL" -f "$(kxc schema)"

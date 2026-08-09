@@ -14,8 +14,8 @@
   <meta property="og:description" content="When you leave a job your 401(k) does not disappear or revert to your employer — the money stays yours. It normally remains in the old employer&#39;s plan, but" />
   <meta property="og:image" content="https://raysmgmt.com/assets/og-image.png" />
   <meta name="twitter:card" content="summary_large_image" />
-  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-  <link rel="stylesheet" href="/assets/site.css" />
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="../assets/site.css" />
   <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -77,14 +77,17 @@
   <a class="skip-link" href="#main">Skip to main content</a>
   <header class="site">
     <div class="wrap nav">
-      <a class="brand" href="/" aria-label="ReclaimWealth home"><span class="mark" aria-hidden="true">R</span> ReclaimWealth</a>
-      <nav class="nav-links" aria-label="Primary">
-        <a href="/#how">How It Works</a>
-        <a href="/#registries">Where We Search</a>
-        <a href="/states/">By State</a>
-        <a href="/learn/">Learn</a>
-        <a href="/#faq">FAQ</a>
-        <a href="/#search" class="btn btn-gold" style="padding:.55rem 1.1rem;font-size:.9rem">Free Search</a>
+      <a class="brand" href="../index.html" aria-label="ReclaimWealth home"><span class="mark" aria-hidden="true">R</span> ReclaimWealth</a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primaryNav" aria-label="Menu">
+        <span class="bars" aria-hidden="true"></span>
+      </button>
+      <nav class="nav-links" id="primaryNav" aria-label="Primary">
+        <a href="../index.html#how">How It Works</a>
+        <a href="../states/index.html">By State</a>
+        <a href="../learn/index.html">Guides</a>
+        <a href="../pricing.html">Pricing</a>
+        <a href="../contact.html">Contact</a>
+        <a href="../index.html#search" class="btn btn-gold" style="padding:.55rem 1.1rem;font-size:.9rem">Free Search</a>
       </nav>
     </div>
   </header>
@@ -92,7 +95,7 @@
   <main id="main">
     <div class="wrap">
       <nav class="crumbs" aria-label="Breadcrumb">
-        <ol><li><a href="/">Home</a></li><li><a href="/learn/">Learn</a></li><li>What happens to your 401(k) when you leave a job</li></ol>
+        <ol><li><a href="../index.html">Home</a></li><li><a href="../learn/index.html">Learn</a></li><li>What happens to your 401(k) when you leave a job</li></ol>
       </nav>
     </div>
     <section style="padding-top:28px">
@@ -125,19 +128,94 @@
 
         <h2>Related guides</h2>
         <div class="state-grid">
-          <a href="/learn/how-to-find-a-lost-401k.html">How to find a lost 401(k): the complete process</a>
-          <a href="/learn/what-is-escheatment.html">Escheatment: how your money ends up with the state</a>
-          <a href="/learn/auto-rollover-ira.html">Auto-rollover and safe harbor IRAs: the account you never opened</a>
+          <a href="../learn/how-to-find-a-lost-401k.html">How to find a lost 401(k): the complete process</a>
+          <a href="../learn/what-is-escheatment.html">Escheatment: how your money ends up with the state</a>
+          <a href="../learn/auto-rollover-ira.html">Auto-rollover and safe harbor IRAs: the account you never opened</a>
         </div>
 
-        <p style="margin-top:24px"><a href="/learn/">All guides and glossary →</a></p>
+        <p style="margin-top:24px"><a href="../learn/index.html">All guides and glossary →</a></p>
       </div>
     </section>
-    <section class="band">
-      <div class="wrap">
-        <h2>Find out what you left behind</h2>
-        <p>Tell us where you've worked and we'll map every registry worth checking — free.</p>
-        <a href="/#search" class="btn btn-gold btn-lg">Start My Free Search →</a>
+    <section class="lead-band">
+      <div class="wrap grid">
+        <div>
+          <span class="eyebrow">Free search plan</span>
+          <h2>Find out what you left behind</h2>
+          <p class="lead-copy">Tell us where you've worked and we'll map every registry worth checking — free.</p>
+          <div class="free-notice">
+            <strong>Always free to search yourself.</strong> Every registry we use is a free public or government resource, and you can file any claim directly at no cost. We charge only if you want us to do the work for you.
+          </div>
+          <div class="dual-cta">
+            <span class="or">Already know you want help?</span>
+            <p>Skip ahead and we'll run the full 50-state sweep and trace every employer you list.</p>
+            <a href="../pricing.html" class="btn btn-gold">See plans &amp; sign up →</a>
+          </div>
+        </div>
+
+        <div class="lead-card">
+          <h3>Get your free search plan</h3>
+          <p class="sub">Tell us where you've worked and we'll email your personalized checklist. No payment, no obligation.</p>
+
+          <form data-lead novalidate>
+            <div class="row-2">
+              <div class="field">
+                <label for="learn-what-happens-to-401k-when-you-leave-a-job-first">First name</label>
+                <input id="learn-what-happens-to-401k-when-you-leave-a-job-first" name="firstName" type="text" autocomplete="given-name" required />
+              </div>
+              <div class="field">
+                <label for="learn-what-happens-to-401k-when-you-leave-a-job-last">Last name</label>
+                <input id="learn-what-happens-to-401k-when-you-leave-a-job-last" name="lastName" type="text" autocomplete="family-name" required />
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="learn-what-happens-to-401k-when-you-leave-a-job-email">Email <span class="hint">— where we send your plan</span></label>
+              <input id="learn-what-happens-to-401k-when-you-leave-a-job-email" name="email" type="email" autocomplete="email" required />
+            </div>
+
+            <div class="row-2">
+              <div class="field">
+                <label for="learn-what-happens-to-401k-when-you-leave-a-job-phone">Phone <span class="hint">(optional)</span></label>
+                <input id="learn-what-happens-to-401k-when-you-leave-a-job-phone" name="phone" type="tel" autocomplete="tel" />
+              </div>
+              <div class="field">
+                <label for="learn-what-happens-to-401k-when-you-leave-a-job-state">State(s) you've worked in</label>
+                <input id="learn-what-happens-to-401k-when-you-leave-a-job-state" name="state" type="text" placeholder="e.g. NY, NJ, FL" />
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="learn-what-happens-to-401k-when-you-leave-a-job-employer">A former employer</label>
+              <input id="learn-what-happens-to-401k-when-you-leave-a-job-employer" name="employer" type="text" placeholder="e.g. Acme Corp" />
+            </div>
+
+            <!-- Honeypot: hidden from people, tempting to bots -->
+            <div style="position:absolute;left:-9999px" aria-hidden="true">
+              <label for="learn-what-happens-to-401k-when-you-leave-a-job-website">Leave this field empty</label>
+              <input id="learn-what-happens-to-401k-when-you-leave-a-job-website" name="website" type="text" tabindex="-1" autocomplete="off" />
+            </div>
+
+            <div class="consent-group">
+              <label class="consent" for="learn-what-happens-to-401k-when-you-leave-a-job-consent">
+                <input type="checkbox" id="learn-what-happens-to-401k-when-you-leave-a-job-consent" data-consent-service required />
+                <span>I authorize ReclaimWealth to search publicly available registries on my behalf and to contact me by email about the results. I understand ReclaimWealth is not a government agency, that I may search these registries and file any claim myself at no cost, and that ReclaimWealth does not guarantee that any unclaimed funds exist. I agree to the <a href="../terms.html">Terms</a> and <a href="../privacy.html">Privacy Policy</a>.</span>
+              </label>
+              <label class="consent" for="learn-what-happens-to-401k-when-you-leave-a-job-phone-consent">
+                <input type="checkbox" id="learn-what-happens-to-401k-when-you-leave-a-job-phone-consent" data-consent-phone />
+                <span>
+                  I agree to receive calls and texts from ReclaimWealth at the number I provided, including messages sent using an automatic telephone dialing system or prerecorded voice.
+                  <span class="optional-tag">Optional</span>
+                  <small>Consent is not a condition of purchase. Message frequency varies. Message and data rates may apply. Reply STOP to opt out.</small>
+                </span>
+              </label>
+            </div>
+
+            <p class="err" tabindex="-1" role="alert"></p>
+
+            <button type="submit" class="btn btn-green btn-lg" style="width:100%">Email My Free Search Plan</button>
+            <p class="fineprint">🔒 We never sell your personal information.</p>
+          </form>
+        </div>
       </div>
     </section>
   </main>
@@ -151,18 +229,20 @@
         </div>
         <div>
           <h5>Explore</h5>
-          <a href="/#how">How It Works</a>
-          <a href="/#registries">Where We Search</a>
-          <a href="/states/">Search by State</a>
-          <a href="/learn/">Guides &amp; Glossary</a>
-          <a href="/#pricing">Pricing</a>
+          <a href="../index.html#how">How It Works</a>
+          <a href="../index.html#registries">Where We Search</a>
+          <a href="../states/index.html">Search by State</a>
+          <a href="../find/index.html">Find Your Plan</a>
+          <a href="../learn/index.html">Guides &amp; Glossary</a>
+          <a href="../pricing.html">Pricing</a>
         </div>
         <div>
           <h5>Company</h5>
-          <a href="/about.html">About &amp; How We Make Money</a>
-          <a href="/privacy.html">Privacy Policy</a>
-          <a href="/terms.html">Terms of Service</a>
-          <a href="/disclosures.html">Disclosures</a>
+          <a href="../about.html">About &amp; How We Make Money</a>
+          <a href="../contact.html">Contact Us</a>
+          <a href="../privacy.html">Privacy Policy</a>
+          <a href="../terms.html">Terms of Service</a>
+          <a href="../disclosures.html">Disclosures</a>
         </div>
       </div>
       <div class="disclaimer">
@@ -172,7 +252,7 @@
       </div>
     </div>
   </footer>
-  <script src="/assets/integrations.js"></script>
-  <script src="/assets/site.js"></script>
+  <script src="../assets/integrations.js"></script>
+  <script src="../assets/site.js"></script>
 </body>
 </html>

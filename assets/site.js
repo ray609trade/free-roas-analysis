@@ -501,7 +501,273 @@ function initModal() {
 /* ---- init -------------------------------------------------------------- */
 document.addEventListener("DOMContentLoaded", function () {
   setYear();
+  initNav();
   initEmployerRows();
   initFinderForm();
+  initInlineLeadForms();
+  initContactForm();
   initModal();
 });
+
+/* =========================================================================
+   Additions: mobile navigation, inline lead-capture forms (interior pages),
+   and the contact form. All lead submission reuses submitLead() above so
+   consent evidence, CRM push and the autoresponder behave identically
+   wherever a person happens to convert.
+   ========================================================================= */
+
+/* Pages live at different depths (/, /states/, /find/, /learn/) and the site
+   is built to open straight off the filesystem, so links must be relative.
+   Derive the prefix from the stylesheet href rather than hard-coding it. */
+function rootPrefix() {
+  var link = document.querySelector('link[rel="stylesheet"]');
+  var href = link ? link.getAttribute("href") || "" : "";
+  var i = href.indexOf("assets/site.css");
+  return i === -1 ? "" : href.slice(0, i);
+}
+
+/* ---- mobile navigation -------------------------------------------------- */
+function initNav() {
+  var toggle = document.querySelector(".nav-toggle");
+  var links = document.querySelector(".nav-links");
+  if (!toggle || !links) return;
+
+  function setOpen(open) {
+    toggle.setAttribute("aria-expanded", open ? "true" : "false");
+    links.classList.toggle("open", open);
+  }
+
+  toggle.addEventListener("click", function () {
+    setOpen(toggle.getAttribute("aria-expanded") !== "true");
+  });
+
+  /* Tapping a link, pressing Escape, or growing past the breakpoint all
+     close the drawer so it can never be left stranded open. */
+  links.addEventListener("click", function (e) {
+    if (e.target.tagName === "A") setOpen(false);
+  });
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape") setOpen(false);
+  });
+  window.addEventListener("resize", function () {
+    if (window.innerWidth > 800) setOpen(false);
+  });
+}
+
+/* ---- shared validation for the compact forms ---------------------------- */
+function readField(form, name) {
+  var el = form.querySelector('[name="' + name + '"]');
+  return el ? el.value.trim() : "";
+}
+
+function showFormError(form, message) {
+  var err = form.querySelector(".err");
+  if (!err) return;
+  err.textContent = message;
+  err.style.display = "block";
+  err.focus();
+}
+
+function clearFormError(form) {
+  var err = form.querySelector(".err");
+  if (err) err.style.display = "none";
+}
+
+/* Swaps a submitted form out for a success panel in the same card. */
+function replaceWithSuccess(form, html) {
+  var card = form.closest(".lead-card") || form.parentNode;
+  var panel = document.createElement("div");
+  panel.className = "form-success";
+  panel.setAttribute("role", "status");
+  panel.innerHTML = html;
+  card.parentNode.replaceChild(panel, card);
+  panel.scrollIntoView({ block: "center", behavior: "smooth" });
+}
+
+/* ---- inline lead forms (state / recordkeeper / guide pages) ------------- */
+function initInlineLeadForms() {
+  var forms = document.querySelectorAll("form[data-lead]");
+  if (!forms.length) return;
+  var prefix = rootPrefix();
+
+  Array.prototype.forEach.call(forms, function (form) {
+    var loadedAt = Date.now();
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      var serviceBox = form.querySelector("[data-consent-service]");
+      var phoneBox = form.querySelector("[data-consent-phone]");
+      var employer = readField(form, "employer");
+
+      var data = {
+        firstName: readField(form, "firstName"),
+        lastName: readField(form, "lastName"),
+        email: readField(form, "email"),
+        phone: readField(form, "phone"),
+        state: readField(form, "state"),
+        phoneConsent: phoneBox ? phoneBox.checked : false,
+        employers: employer ? [employer] : []
+      };
+
+      var problems = [];
+      if (!data.firstName) problems.push("your first name");
+      if (!data.lastName) problems.push("your last name");
+      if (!isValidEmail(data.email)) problems.push("a valid email address");
+      if (serviceBox && !serviceBox.checked) {
+        problems.push("your authorization to search (the checkbox)");
+      }
+      if (data.phoneConsent && !isValidPhone(data.phone)) {
+        problems.push("a valid US phone number to agree to calls and texts");
+      }
+      if (data.phone && !isValidPhone(data.phone)) {
+        problems.push("a valid US phone number (or leave it blank)");
+      }
+
+      /* Silent bot checks, same as the main finder form. */
+      var hp = form.querySelector('[name="website"]');
+      if ((hp && hp.value) || Date.now() - loadedAt < 1500) {
+        form.reset();
+        return;
+      }
+
+      if (problems.length) {
+        showFormError(form, "Please add " + problems.join(", ") + ".");
+        return;
+      }
+      clearFormError(form);
+
+      submitLead(data);
+
+      replaceWithSuccess(
+        form,
+        '<div class="tick" aria-hidden="true">✓</div>' +
+          "<h3>Your search plan is on its way.</h3>" +
+          "<p>We sent it to <strong>" + escapeHtml(data.email) + "</strong>. " +
+          "It lists every registry worth checking for your work history, in the order " +
+          "worth checking them, with direct links. If it hasn't arrived in a few " +
+          "minutes, check your spam folder.</p>" +
+          "<p style=\"margin-bottom:.6em\"><strong>What happens next</strong></p>" +
+          "<ol>" +
+          "<li>Work through the four free searches in your plan — most people find " +
+          "something in the state unclaimed property step.</li>" +
+          "<li>File any claim directly with the state or plan administrator at no cost.</li>" +
+          "<li>If you'd rather not do the legwork, we can run the full 50-state sweep for you.</li>" +
+          "</ol>" +
+          '<div class="next">' +
+          '<a class="btn btn-green" href="' + prefix + 'pricing.html">See what full access includes</a>' +
+          '<a class="btn" style="border:1.5px solid var(--line);color:var(--green)" href="' +
+          prefix + 'contact.html">Ask us a question</a>' +
+          "</div>"
+      );
+    });
+  });
+}
+
+/* ---- contact form ------------------------------------------------------- */
+function submitContact(data) {
+  var payload = {
+    source: CONFIG.brand + " — Contact Form",
+    submittedAt: new Date().toISOString(),
+    name: data.name,
+    email: data.email,
+    phone: data.phone || "",
+    topic: data.topic,
+    message: data.message,
+    consentPage: window.location.href,
+    _subject: "Contact form: " + data.topic + " — " + data.name,
+    _template: "table",
+    _captcha: "false",
+    _autoresponse:
+      "Hi " + data.name.split(" ")[0] + ",\n\n" +
+      "Thanks for getting in touch — we've got your message and a real person " +
+      "will reply, usually within one business day.\n\n" +
+      "In the meantime, if you're trying to track down a lost retirement account, " +
+      "every registry we use is free and open to you directly:\n\n" +
+      "  State unclaimed property:  https://www.missingmoney.com/en/\n" +
+      "  DOL Lost & Found:          https://lostandfound.dol.gov/\n" +
+      "  Find your old plan today:  https://www.efast.dol.gov/5500Search/\n\n" +
+      "You never need to pay anyone — including us — to claim your own money.\n\n" +
+      "— ReclaimWealth\n" +
+      "   info@rmgcredit.com"
+  };
+
+  try {
+    var saved = JSON.parse(localStorage.getItem("rw_contacts") || "[]");
+    saved.push(payload);
+    localStorage.setItem("rw_contacts", JSON.stringify(saved));
+  } catch (e) { /* private browsing / storage disabled */ }
+
+  CONFIG.track("contact_submit", { topic: data.topic });
+
+  if (typeof sendToCrm === "function") {
+    sendToCrm({
+      event: "contact_message",
+      submittedAt: payload.submittedAt,
+      name: data.name,
+      email: data.email,
+      phone: data.phone || "",
+      topic: data.topic,
+      message: data.message,
+      plan: "n/a"
+    });
+  }
+
+  return fetch(CONFIG.leadEndpoint, {
+    method: "POST",
+    headers: { "Content-Type": "application/json", Accept: "application/json" },
+    body: JSON.stringify(payload)
+  })
+    .then(function (r) { return { ok: r.ok }; })
+    .catch(function () { return { ok: false }; });
+}
+
+function initContactForm() {
+  var form = $("contactForm");
+  if (!form) return;
+  var loadedAt = Date.now();
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    var data = {
+      name: readField(form, "name"),
+      email: readField(form, "email"),
+      phone: readField(form, "phone"),
+      topic: readField(form, "topic") || "General question",
+      message: readField(form, "message")
+    };
+
+    var problems = [];
+    if (!data.name) problems.push("your name");
+    if (!isValidEmail(data.email)) problems.push("a valid email address");
+    if (data.message.length < 10) problems.push("a short message so we know how to help");
+    if (data.phone && !isValidPhone(data.phone)) {
+      problems.push("a valid US phone number (or leave it blank)");
+    }
+
+    var hp = form.querySelector('[name="website"]');
+    if ((hp && hp.value) || Date.now() - loadedAt < 1500) {
+      form.reset();
+      return;
+    }
+
+    if (problems.length) {
+      showFormError(form, "Please add " + problems.join(", ") + ".");
+      return;
+    }
+    clearFormError(form);
+
+    submitContact(data);
+
+    replaceWithSuccess(
+      form,
+      '<div class="tick" aria-hidden="true">✓</div>' +
+        "<h3>Message received.</h3>" +
+        "<p>Thanks, " + escapeHtml(data.name.split(" ")[0]) + ". We've sent a copy to " +
+        "<strong>" + escapeHtml(data.email) + "</strong> and a real person will reply, " +
+        "usually within one business day.</p>" +
+        "<p>If it's urgent, call us at <a href=\"tel:+16094538990\">609-453-8990</a>.</p>"
+    );
+  });
+}

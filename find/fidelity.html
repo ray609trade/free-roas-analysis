@@ -14,8 +14,8 @@
   <meta property="og:description" content="Steps to locate and recover a forgotten 401(k) or retirement account held by Fidelity Investments, plus the free federal and state registries to search alongside it." />
   <meta property="og:image" content="https://raysmgmt.com/assets/og-image.png" />
   <meta name="twitter:card" content="summary_large_image" />
-  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-  <link rel="stylesheet" href="/assets/site.css" />
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="../assets/site.css" />
   <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -47,14 +47,17 @@
   <a class="skip-link" href="#main">Skip to main content</a>
   <header class="site">
     <div class="wrap nav">
-      <a class="brand" href="/" aria-label="ReclaimWealth home"><span class="mark" aria-hidden="true">R</span> ReclaimWealth</a>
-      <nav class="nav-links" aria-label="Primary">
-        <a href="/#how">How It Works</a>
-        <a href="/#registries">Where We Search</a>
-        <a href="/states/">By State</a>
-        <a href="/learn/">Learn</a>
-        <a href="/#faq">FAQ</a>
-        <a href="/#search" class="btn btn-gold" style="padding:.55rem 1.1rem;font-size:.9rem">Free Search</a>
+      <a class="brand" href="../index.html" aria-label="ReclaimWealth home"><span class="mark" aria-hidden="true">R</span> ReclaimWealth</a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primaryNav" aria-label="Menu">
+        <span class="bars" aria-hidden="true"></span>
+      </button>
+      <nav class="nav-links" id="primaryNav" aria-label="Primary">
+        <a href="../index.html#how">How It Works</a>
+        <a href="../states/index.html">By State</a>
+        <a href="../learn/index.html">Guides</a>
+        <a href="../pricing.html">Pricing</a>
+        <a href="../contact.html">Contact</a>
+        <a href="../index.html#search" class="btn btn-gold" style="padding:.55rem 1.1rem;font-size:.9rem">Free Search</a>
       </nav>
     </div>
   </header>
@@ -62,7 +65,7 @@
   <main id="main">
     <div class="wrap">
       <nav class="crumbs" aria-label="Breadcrumb">
-        <ol><li><a href="/">Home</a></li><li><a href="/find/">Find Your Plan</a></li><li>Fidelity Investments</li></ol>
+        <ol><li><a href="../index.html">Home</a></li><li><a href="../find/index.html">Find Your Plan</a></li><li>Fidelity Investments</li></ol>
       </nav>
     </div>
     <section style="padding-top:28px">
@@ -90,29 +93,104 @@
           <li><strong>Try the participant portal first.</strong> Use the account lookup link above. Many former employees can re-register with their Social Security number and date of birth even if they never had a login.</li>
           <li><strong>Call if the portal doesn't recognise you.</strong> Have ready: your Social Security number, dates of employment, and the exact legal name of your former employer.</li>
           <li><strong>If they have no record, confirm who holds the plan now.</strong> Recordkeepers change. Search the <a href="https://www.efast.dol.gov/5500Search/" target="_blank" rel="noopener noreferrer">DOL Form 5500 filings</a> for your former employer to see who administers the plan today.</li>
-          <li><strong>Check whether the balance was cashed out.</strong> If the account was closed and escheated, the money is with a state — see our <a href="/states/">state guides</a>.</li>
+          <li><strong>Check whether the balance was cashed out.</strong> If the account was closed and escheated, the money is with a state — see our <a href="../states/index.html">state guides</a>.</li>
           <li><strong>Escalate if you are stonewalled.</strong> <a href="https://www.dol.gov/agencies/ebsa/about-ebsa/ask-a-question/ask-ebsa" target="_blank" rel="noopener noreferrer">DOL Benefits Advisors</a> help for free.</li>
         </ol>
 
         <h2>Other major recordkeepers</h2>
         <div class="state-grid">
-          <a href="/find/empower.html">Empower</a>
-          <a href="/find/vanguard.html">Vanguard</a>
-          <a href="/find/principal.html">Principal Financial Group</a>
-          <a href="/find/voya.html">Voya Financial</a>
-          <a href="/find/tiaa.html">TIAA</a>
-          <a href="/find/charles-schwab.html">Charles Schwab</a>
-          <a href="/find/ascensus.html">Ascensus</a>
-          <a href="/find/adp.html">ADP Retirement Services</a>
+          <a href="../find/empower.html">Empower</a>
+          <a href="../find/vanguard.html">Vanguard</a>
+          <a href="../find/principal.html">Principal Financial Group</a>
+          <a href="../find/voya.html">Voya Financial</a>
+          <a href="../find/tiaa.html">TIAA</a>
+          <a href="../find/charles-schwab.html">Charles Schwab</a>
+          <a href="../find/ascensus.html">Ascensus</a>
+          <a href="../find/adp.html">ADP Retirement Services</a>
         </div>
-        <p style="margin-top:16px"><a href="/find/">See all recordkeepers →</a></p>
+        <p style="margin-top:16px"><a href="../find/index.html">See all recordkeepers →</a></p>
       </div>
     </section>
-    <section class="band">
-      <div class="wrap">
-        <h2>Not sure who holds your old plan?</h2>
-        <p>Tell us where you worked and we'll trace it — free.</p>
-        <a href="/#search" class="btn btn-gold btn-lg">Start My Free Search →</a>
+    <section class="lead-band">
+      <div class="wrap grid">
+        <div>
+          <span class="eyebrow">Free search plan</span>
+          <h2>Not sure who holds your old plan?</h2>
+          <p class="lead-copy">Tell us where you worked and we'll trace it — free.</p>
+          <div class="free-notice">
+            <strong>Always free to search yourself.</strong> Every registry we use is a free public or government resource, and you can file any claim directly at no cost. We charge only if you want us to do the work for you.
+          </div>
+          <div class="dual-cta">
+            <span class="or">Already know you want help?</span>
+            <p>Skip ahead and we'll run the full 50-state sweep and trace every employer you list.</p>
+            <a href="../pricing.html" class="btn btn-gold">See plans &amp; sign up →</a>
+          </div>
+        </div>
+
+        <div class="lead-card">
+          <h3>Get your free search plan</h3>
+          <p class="sub">Tell us where you've worked and we'll email your personalized checklist. No payment, no obligation.</p>
+
+          <form data-lead novalidate>
+            <div class="row-2">
+              <div class="field">
+                <label for="find-fidelity-first">First name</label>
+                <input id="find-fidelity-first" name="firstName" type="text" autocomplete="given-name" required />
+              </div>
+              <div class="field">
+                <label for="find-fidelity-last">Last name</label>
+                <input id="find-fidelity-last" name="lastName" type="text" autocomplete="family-name" required />
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="find-fidelity-email">Email <span class="hint">— where we send your plan</span></label>
+              <input id="find-fidelity-email" name="email" type="email" autocomplete="email" required />
+            </div>
+
+            <div class="row-2">
+              <div class="field">
+                <label for="find-fidelity-phone">Phone <span class="hint">(optional)</span></label>
+                <input id="find-fidelity-phone" name="phone" type="tel" autocomplete="tel" />
+              </div>
+              <div class="field">
+                <label for="find-fidelity-state">State(s) you've worked in</label>
+                <input id="find-fidelity-state" name="state" type="text" placeholder="e.g. NY, NJ, FL" />
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="find-fidelity-employer">A former employer</label>
+              <input id="find-fidelity-employer" name="employer" type="text" placeholder="e.g. Acme Corp" />
+            </div>
+
+            <!-- Honeypot: hidden from people, tempting to bots -->
+            <div style="position:absolute;left:-9999px" aria-hidden="true">
+              <label for="find-fidelity-website">Leave this field empty</label>
+              <input id="find-fidelity-website" name="website" type="text" tabindex="-1" autocomplete="off" />
+            </div>
+
+            <div class="consent-group">
+              <label class="consent" for="find-fidelity-consent">
+                <input type="checkbox" id="find-fidelity-consent" data-consent-service required />
+                <span>I authorize ReclaimWealth to search publicly available registries on my behalf and to contact me by email about the results. I understand ReclaimWealth is not a government agency, that I may search these registries and file any claim myself at no cost, and that ReclaimWealth does not guarantee that any unclaimed funds exist. I agree to the <a href="../terms.html">Terms</a> and <a href="../privacy.html">Privacy Policy</a>.</span>
+              </label>
+              <label class="consent" for="find-fidelity-phone-consent">
+                <input type="checkbox" id="find-fidelity-phone-consent" data-consent-phone />
+                <span>
+                  I agree to receive calls and texts from ReclaimWealth at the number I provided, including messages sent using an automatic telephone dialing system or prerecorded voice.
+                  <span class="optional-tag">Optional</span>
+                  <small>Consent is not a condition of purchase. Message frequency varies. Message and data rates may apply. Reply STOP to opt out.</small>
+                </span>
+              </label>
+            </div>
+
+            <p class="err" tabindex="-1" role="alert"></p>
+
+            <button type="submit" class="btn btn-green btn-lg" style="width:100%">Email My Free Search Plan</button>
+            <p class="fineprint">🔒 We never sell your personal information.</p>
+          </form>
+        </div>
       </div>
     </section>
   </main>
@@ -126,18 +204,20 @@
         </div>
         <div>
           <h5>Explore</h5>
-          <a href="/#how">How It Works</a>
-          <a href="/#registries">Where We Search</a>
-          <a href="/states/">Search by State</a>
-          <a href="/learn/">Guides &amp; Glossary</a>
-          <a href="/#pricing">Pricing</a>
+          <a href="../index.html#how">How It Works</a>
+          <a href="../index.html#registries">Where We Search</a>
+          <a href="../states/index.html">Search by State</a>
+          <a href="../find/index.html">Find Your Plan</a>
+          <a href="../learn/index.html">Guides &amp; Glossary</a>
+          <a href="../pricing.html">Pricing</a>
         </div>
         <div>
           <h5>Company</h5>
-          <a href="/about.html">About &amp; How We Make Money</a>
-          <a href="/privacy.html">Privacy Policy</a>
-          <a href="/terms.html">Terms of Service</a>
-          <a href="/disclosures.html">Disclosures</a>
+          <a href="../about.html">About &amp; How We Make Money</a>
+          <a href="../contact.html">Contact Us</a>
+          <a href="../privacy.html">Privacy Policy</a>
+          <a href="../terms.html">Terms of Service</a>
+          <a href="../disclosures.html">Disclosures</a>
         </div>
       </div>
       <div class="disclaimer">
@@ -147,7 +227,7 @@
       </div>
     </div>
   </footer>
-  <script src="/assets/integrations.js"></script>
-  <script src="/assets/site.js"></script>
+  <script src="../assets/integrations.js"></script>
+  <script src="../assets/site.js"></script>
 </body>
 </html>

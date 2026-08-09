@@ -257,3 +257,118 @@
 .sources h4{font-size:.8rem;text-transform:uppercase;letter-spacing:.05em;margin:0 0 .5em;color:var(--slate)}
 .sources ol{padding-left:1.1rem;margin:0}
 .sources li{margin-bottom:.3rem}
+
+/* ============================================================
+   Additions: mobile navigation, inline lead capture, contact
+   page, standalone pricing page, form success states.
+   ============================================================ */
+
+/* --- Mobile navigation ---------------------------------------------------
+   The nav was previously display:none below 800px with no alternative,
+   which left phone visitors with no way to move around the site. */
+.nav-toggle{
+  display:none;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.25);
+  color:#fff;width:42px;height:42px;border-radius:11px;cursor:pointer;
+  align-items:center;justify-content:center;padding:0;
+}
+.nav-toggle:hover{background:rgba(255,255,255,.18)}
+.nav-toggle .bars{position:relative;width:18px;height:2px;background:#fff;border-radius:2px;transition:background .15s}
+.nav-toggle .bars::before,.nav-toggle .bars::after{
+  content:"";position:absolute;left:0;width:18px;height:2px;background:#fff;border-radius:2px;transition:transform .18s ease;
+}
+.nav-toggle .bars::before{top:-6px}
+.nav-toggle .bars::after{top:6px}
+.nav-toggle[aria-expanded="true"] .bars{background:transparent}
+.nav-toggle[aria-expanded="true"] .bars::before{transform:translateY(6px) rotate(45deg)}
+.nav-toggle[aria-expanded="true"] .bars::after{transform:translateY(-6px) rotate(-45deg)}
+
+@media(max-width:800px){
+  .nav-toggle{display:inline-flex}
+  .nav-links{
+    display:none;position:absolute;top:66px;left:0;right:0;
+    background:var(--green-700);flex-direction:column;align-items:stretch;
+    gap:0;padding:8px 22px 18px;border-top:1px solid rgba(255,255,255,.12);
+    box-shadow:0 18px 34px rgba(8,43,34,.28);
+  }
+  .nav-links.open{display:flex}
+  .nav-links a{padding:.85rem 0;border-bottom:1px solid rgba(255,255,255,.08);font-size:1rem}
+  .nav-links a:last-child{border-bottom:0;margin-top:12px;text-align:center}
+  header.site{position:sticky}
+}
+
+/* --- Inline lead capture (interior pages) ------------------------------- */
+.lead-band{
+  background:radial-gradient(900px 420px at 85% -20%, #10715a 0%, transparent 60%),
+             linear-gradient(160deg,var(--green) 0%, var(--green-700) 100%);
+  color:#fff;
+}
+.lead-band .grid{display:grid;grid-template-columns:1fr 1fr;gap:44px;align-items:center}
+@media(max-width:900px){.lead-band .grid{grid-template-columns:1fr;gap:28px}}
+.lead-band h2{color:#fff;font-size:clamp(1.55rem,2.8vw,2.15rem)}
+.lead-band .lead-copy{color:#d7ebe4;font-size:1.05rem;max-width:520px}
+.lead-band .free-notice{background:rgba(255,255,255,.1);border-color:rgba(224,179,74,.5);color:#f0e4c4}
+.lead-band .free-notice strong{color:var(--gold)}
+
+/* The "or sign up now" second path, so every page offers both routes. */
+.dual-cta{
+  display:flex;flex-direction:column;gap:12px;margin-top:26px;
+  border-top:1px solid rgba(255,255,255,.16);padding-top:22px;
+}
+.dual-cta .or{font-size:.82rem;text-transform:uppercase;letter-spacing:.06em;font-weight:800;color:var(--gold)}
+.dual-cta p{color:#c6ded6;font-size:.94rem;margin:0}
+.dual-cta .btn{align-self:flex-start}
+
+/* Compact form card used on every interior page and the contact page. */
+.lead-card{
+  background:var(--paper-2);color:var(--ink);border-radius:20px;
+  box-shadow:var(--shadow);padding:26px;border:1px solid rgba(255,255,255,.6);
+}
+.lead-card h3{font-size:1.25rem;margin-bottom:.25em}
+.lead-card .sub{color:var(--slate);font-size:.93rem;margin-bottom:18px}
+.lead-card .fineprint{text-align:center;font-size:.76rem;color:var(--slate);margin:12px 0 0}
+
+/* --- Form success state -------------------------------------------------- */
+.form-success{
+  background:#fff;border:1px solid var(--line);border-left:4px solid var(--ok);
+  border-radius:14px;padding:26px;box-shadow:var(--shadow-sm);
+}
+.form-success .tick{
+  width:44px;height:44px;border-radius:50%;background:rgba(11,122,91,.12);color:var(--ok);
+  display:grid;place-items:center;font-size:1.4rem;font-weight:900;margin-bottom:14px;
+}
+.form-success h3{font-size:1.25rem;margin-bottom:.3em}
+.form-success p{color:var(--slate);font-size:.95rem}
+.form-success ol{color:var(--slate);font-size:.93rem;padding-left:1.1rem;margin:0 0 1em}
+.form-success li{margin-bottom:.4rem}
+.form-success .next{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+
+/* --- Contact page -------------------------------------------------------- */
+.contact-grid{display:grid;grid-template-columns:1fr 1.15fr;gap:46px;align-items:start}
+@media(max-width:900px){.contact-grid{grid-template-columns:1fr;gap:30px}}
+.contact-methods{list-style:none;padding:0;margin:26px 0 0;display:flex;flex-direction:column;gap:18px}
+.contact-methods li{display:flex;gap:14px;align-items:flex-start}
+.contact-methods .ico{
+  flex:0 0 44px;height:44px;border-radius:12px;background:rgba(11,93,74,.08);
+  color:var(--green);display:grid;place-items:center;font-size:1.2rem;
+}
+.contact-methods b{display:block;font-size:.98rem;color:var(--ink)}
+.contact-methods span{font-size:.9rem;color:var(--slate)}
+.contact-methods a{font-weight:600}
+
+/* --- Standalone pricing page --------------------------------------------- */
+.page-hero{
+  background:linear-gradient(160deg,var(--green) 0%, var(--green-700) 100%);
+  color:#fff;padding:56px 0 62px;text-align:center;
+}
+.page-hero h1{color:#fff;font-size:clamp(1.9rem,3.6vw,2.8rem);margin-bottom:.3em}
+.page-hero p{color:#d7ebe4;font-size:1.1rem;max-width:640px;margin:0 auto}
+.page-hero .eyebrow{margin-bottom:14px}
+
+.compare{width:100%;border-collapse:collapse;font-size:.93rem;background:#fff;
+  border-radius:12px;overflow:hidden;box-shadow:var(--shadow-sm)}
+.compare th,.compare td{padding:.8rem 1rem;border-bottom:1px solid var(--line);text-align:left}
+.compare thead th{background:rgba(11,93,74,.06);color:var(--green-700);font-weight:700}
+.compare td:not(:first-child),.compare th:not(:first-child){text-align:center;width:18%}
+.compare tr:last-child td{border-bottom:0}
+.compare .yes{color:var(--ok);font-weight:900}
+.compare .no{color:#9aa8a3}

@@ -22,11 +22,9 @@
   <meta name="twitter:description" content="$2.1 trillion sits in 31.9 million forgotten 401(k) accounts. Find out if some of it is yours." />
   <meta name="twitter:image" content="https://raysmgmt.com/assets/og-image.png" />
 
-  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-  <link rel="icon" href="/favicon.ico" sizes="32x32" />
-  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-  <link rel="manifest" href="/site.webmanifest" />
-  <link rel="stylesheet" href="/assets/site.css" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="manifest" href="site.webmanifest" />
+  <link rel="stylesheet" href="assets/site.css" />
 
   <script type="application/ld+json">
   {
@@ -179,15 +177,18 @@
 
   <header class="site">
     <div class="wrap nav">
-      <a class="brand" href="/" aria-label="ReclaimWealth home">
+      <a class="brand" href="index.html" aria-label="ReclaimWealth home">
         <span class="mark" aria-hidden="true">R</span> ReclaimWealth
       </a>
-      <nav class="nav-links" aria-label="Primary">
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primaryNav" aria-label="Menu">
+        <span class="bars" aria-hidden="true"></span>
+      </button>
+      <nav class="nav-links" id="primaryNav" aria-label="Primary">
         <a href="#how">How It Works</a>
-        <a href="#registries">Where We Search</a>
-        <a href="/states/">By State</a>
-        <a href="#pricing">Pricing</a>
-        <a href="#faq">FAQ</a>
+        <a href="states/index.html">By State</a>
+        <a href="learn/index.html">Guides</a>
+        <a href="pricing.html">Pricing</a>
+        <a href="contact.html">Contact</a>
         <a href="#search" class="btn btn-gold" style="padding:.55rem 1.1rem;font-size:.9rem">Free Search</a>
       </nav>
     </div>
@@ -270,7 +271,7 @@
           <div class="consent-group">
             <label class="consent" for="consent">
               <input type="checkbox" id="consent" required />
-              <span>I authorize ReclaimWealth to search publicly available registries and records on my behalf and to contact me by email about the results. I understand ReclaimWealth is not a government agency and is not affiliated with any retirement plan or financial institution, that I may search these registries and file any claim myself at no cost, and that ReclaimWealth does not guarantee that any unclaimed funds exist. I agree to the <a href="/terms.html">Terms of Service</a> and <a href="/privacy.html">Privacy Policy</a>.</span>
+              <span>I authorize ReclaimWealth to search publicly available registries and records on my behalf and to contact me by email about the results. I understand ReclaimWealth is not a government agency and is not affiliated with any retirement plan or financial institution, that I may search these registries and file any claim myself at no cost, and that ReclaimWealth does not guarantee that any unclaimed funds exist. I agree to the <a href="terms.html">Terms of Service</a> and <a href="privacy.html">Privacy Policy</a>.</span>
             </label>
 
             <label class="consent" for="phoneConsent">
@@ -379,7 +380,7 @@
           <div class="dot" aria-hidden="true">🗺️</div>
           <div>
             <h3><a href="https://www.missingmoney.com/en/" target="_blank" rel="noopener noreferrer">State Unclaimed Property (MissingMoney)</a></h3>
-            <p>Official state treasuries holding escheated funds. Public record, free to search. See our <a href="/states/">state-by-state guides</a>.</p>
+            <p>Official state treasuries holding escheated funds. Public record, free to search. See our <a href="states/index.html">state-by-state guides</a>.</p>
           </div>
         </div>
         <div class="reg">
@@ -431,7 +432,7 @@
             <li><span class="ck" aria-hidden="true">✓</span> Prepared claim packet and document checklist</li>
             <li><span class="ck" aria-hidden="true">✓</span> <strong>Does not auto-renew.</strong> One charge, nothing after it</li>
           </ul>
-          <a href="/checkout.html?plan=7-day" class="btn btn-green">Get my full report</a>
+          <a href="checkout.html?plan=7-day" class="btn btn-green">Get my full report</a>
         </div>
         <div class="tier">
           <h3>30-Day Full Access</h3>
@@ -443,7 +444,7 @@
             <li><span class="ck" aria-hidden="true">✓</span> Claim support by email and phone</li>
             <li><span class="ck" aria-hidden="true">✓</span> Renews monthly. Cancel anytime, online, in one click</li>
           </ul>
-          <a href="/checkout.html?plan=30-day" class="btn btn-green">Start monthly access</a>
+          <a href="checkout.html?plan=30-day" class="btn btn-green">Start monthly access</a>
         </div>
       </div>
 
@@ -452,7 +453,7 @@
       </div>
 
       <div class="free-notice" style="margin-top:24px">
-        <strong>Before you pay anyone — including us — read this.</strong> Every registry we search is free and open to you directly, and no state or plan charges you to claim your own money. Paid plans buy our time and legwork, nothing more. If you'd rather do it yourself, our <a href="#registries">free links</a> and <a href="/states/">state guides</a> are all you need, and we'd genuinely rather you keep the money.
+        <strong>Before you pay anyone — including us — read this.</strong> Every registry we search is free and open to you directly, and no state or plan charges you to claim your own money. Paid plans buy our time and legwork, nothing more. If you'd rather do it yourself, our <a href="#registries">free links</a> and <a href="states/index.html">state guides</a> are all you need, and we'd genuinely rather you keep the money.
       </div>
     </div>
   </section>
@@ -495,7 +496,7 @@
         </details>
         <details>
           <summary>Is my information safe?</summary>
-          <p>We collect only what's needed to run your search, we never sell your personal information, and we don't ask for your Social Security number to get started. See our <a href="/privacy.html">Privacy Policy</a> for specifics on what we keep and for how long.</p>
+          <p>We collect only what's needed to run your search, we never sell your personal information, and we don't ask for your Social Security number to get started. See our <a href="privacy.html">Privacy Policy</a> for specifics on what we keep and for how long.</p>
         </details>
       </div>
 
@@ -533,18 +534,18 @@
           <h5>Explore</h5>
           <a href="#how">How It Works</a>
           <a href="#registries">Where We Search</a>
-          <a href="/states/">Search by State</a>
-          <a href="/learn/">Guides &amp; Glossary</a>
-          <a href="#pricing">Pricing</a>
-          <a href="#faq">FAQ</a>
+          <a href="states/index.html">Search by State</a>
+          <a href="find/index.html">Find Your Plan</a>
+          <a href="learn/index.html">Guides &amp; Glossary</a>
+          <a href="pricing.html">Pricing</a>
         </div>
         <div>
           <h5>Company</h5>
-          <a href="/about.html">About &amp; How We Make Money</a>
-          <a href="mailto:info@rmgcredit.com">Contact Us</a>
-          <a href="/privacy.html">Privacy Policy</a>
-          <a href="/terms.html">Terms of Service</a>
-          <a href="/disclosures.html">Disclosures</a>
+          <a href="about.html">About &amp; How We Make Money</a>
+          <a href="contact.html">Contact Us</a>
+          <a href="privacy.html">Privacy Policy</a>
+          <a href="terms.html">Terms of Service</a>
+          <a href="disclosures.html">Disclosures</a>
         </div>
       </div>
       <div class="disclaimer">
@@ -571,7 +572,7 @@
     </div>
   </div>
 
-  <script src="/assets/integrations.js"></script>
-  <script src="/assets/site.js"></script>
+  <script src="assets/integrations.js"></script>
+  <script src="assets/site.js"></script>
 </body>
 </html>

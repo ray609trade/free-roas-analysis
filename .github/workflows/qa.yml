@@ -34,23 +34,25 @@ jobs:
       - name: Show Node version
         run: node --version
 
-      - name: Build site from the knowledge base
-        run: node build/build.js
+      - name: Apply the shared page templates
+        run: node tools/build-site.js
 
-      - name: Fail if generated pages are out of date
-        # Generated pages are committed so the site can be served straight from
-        # the branch. If a rebuild changes anything, someone edited a template
-        # or data file without rebuilding, and the deployed pages would be stale.
+      - name: Fail if pages are out of date
+        # Pages are committed so the site can be served straight from the
+        # branch. build-site.js is idempotent, so if running it changes
+        # anything, someone edited a page or template without re-running it
+        # and the committed pages would be inconsistent with the templates.
         run: |
           if ! git diff --quiet; then
-            echo "::error::Generated files are out of date. Run 'node build/build.js' and commit the result."
+            echo "::error::Pages are out of date. Run 'node tools/build-site.js' and commit the result."
             git diff --stat
             exit 1
           fi
-          echo "Generated files are in sync."
+          echo "Pages are in sync with the templates."
 
       - name: Run QA gate
-        # 54 checks across correctness, legal/compliance and quality. Fails on
-        # any regression: a broken free-claim disclosure, missing TCPA consent
-        # language, a leaked secret key, duplicate metadata, and so on.
-        run: node build/qa.js
+        # Correctness, legal/compliance and quality checks. Fails on a missing
+        # free-claim disclosure, missing or bundled TCPA consent language, a
+        # pre-checked consent box, a broken internal link, a root-absolute link
+        # (which breaks filesystem review), a leaked key, or duplicate metadata.
+        run: node tools/qa.js

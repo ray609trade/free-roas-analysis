@@ -22,7 +22,7 @@ on:
   push:
     paths:
       - "data/**"
-      - "build/qa.js"
+      - "tools/qa.js"
 
 permissions:
   contents: read
@@ -48,7 +48,7 @@ jobs:
         id: check
         run: |
           set -o pipefail
-          node build/qa.js --links 2>&1 | tee link-report.txt
+          node tools/qa.js --links 2>&1 | tee link-report.txt
         continue-on-error: true
 
       - name: Summarise

@@ -1,0 +1,10 @@
+node_modules/
+.DS_Store
+*.log
+.env
+.env.local
+dist/
+
+# NOTE: `build/` was previously ignored here, which silently kept the
+# generator scripts described in README.md out of the repository — they were
+# lost as a result. Build tooling now lives in `tools/` and is tracked.

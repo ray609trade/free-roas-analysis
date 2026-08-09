@@ -1,0 +1,225 @@
+{
+  "_meta": {
+    "description": "State unclaimed property programs and their finder/locator law posture. Powers /states/ pages, the search plan, and internal compliance checks.",
+    "lastVerified": "2026-07-25",
+    "verifyNote": "Every searchUrl is link-checked by build/qa.js. Finder-law fields are research summaries for internal planning, NOT legal advice — confirm with counsel before charging fees in any state.",
+    "sources": [
+      "State treasury / comptroller / revenue department official sites",
+      "unclaimed.org (National Association of Unclaimed Property Administrators)"
+    ]
+  },
+  "excludedStates": [],
+  "_excludedStatesNote": "Add two-letter codes here to withhold service from a state (e.g. [\"CA\"]). Excluded states are dropped from page generation and flagged in the UI. Leave empty to serve all states.",
+  "states": [
+    {
+      "code": "CA",
+      "name": "California",
+      "slug": "california",
+      "program": "California Unclaimed Property Program",
+      "office": "California State Controller's Office",
+      "searchUrl": "https://claimit.ca.gov/",
+      "officeUrl": "https://www.sco.ca.gov/upd.html",
+      "phone": "800-992-4647",
+      "dormancyYears": 3,
+      "finderLaw": {
+        "registrationRequired": false,
+        "feeCapPercent": 10,
+        "waitingPeriodMonths": 24,
+        "notes": "California limits finder fees and restricts agreements made before the property has been held for a set period. Confirm current Civil Code requirements before charging."
+      },
+      "highlights": [
+        "The State Controller holds billions of dollars in unclaimed property, among the largest pools in the country.",
+        "California property is held indefinitely — there is no deadline to claim what is yours."
+      ]
+    },
+    {
+      "code": "TX",
+      "name": "Texas",
+      "slug": "texas",
+      "program": "Texas Unclaimed Property",
+      "office": "Texas Comptroller of Public Accounts",
+      "searchUrl": "https://claimittexas.gov/",
+      "officeUrl": "https://comptroller.texas.gov/programs/claim-it/",
+      "phone": "800-321-2274",
+      "dormancyYears": 3,
+      "finderLaw": {
+        "registrationRequired": false,
+        "feeCapPercent": 10,
+        "waitingPeriodMonths": 24,
+        "notes": "Texas caps recovery-agreement fees and restricts agreements soon after property is reported. Verify Property Code requirements before charging."
+      },
+      "highlights": [
+        "Administered by the Comptroller rather than a treasurer — a common point of confusion.",
+        "Texas holds unclaimed property indefinitely until claimed by the rightful owner."
+      ]
+    },
+    {
+      "code": "FL",
+      "name": "Florida",
+      "slug": "florida",
+      "program": "Florida Unclaimed Property",
+      "office": "Florida Department of Financial Services, Division of Unclaimed Property",
+      "searchUrl": "https://www.fltreasurehunt.gov/",
+      "officeUrl": "https://www.fltreasurehunt.gov/",
+      "phone": "888-258-2253",
+      "dormancyYears": 5,
+      "finderLaw": {
+        "registrationRequired": true,
+        "feeCapPercent": 20,
+        "waitingPeriodMonths": 12,
+        "notes": "Florida requires finders to be registered and voids agreements made within 12 months of the property being reported, or within 90 days of a state notification attempt."
+      },
+      "highlights": [
+        "Branded as Florida Treasure Hunt and run by the Department of Financial Services.",
+        "Florida has among the stricter finder rules — registration and a 12-month agreement bar."
+      ]
+    },
+    {
+      "code": "NY",
+      "name": "New York",
+      "slug": "new-york",
+      "program": "New York Office of Unclaimed Funds",
+      "office": "New York State Comptroller",
+      "searchUrl": "https://www.osc.ny.gov/unclaimed-funds",
+      "officeUrl": "https://www.osc.ny.gov/unclaimed-funds",
+      "phone": "800-221-9311",
+      "dormancyYears": 3,
+      "finderLaw": {
+        "registrationRequired": true,
+        "feeCapPercent": 15,
+        "waitingPeriodMonths": 24,
+        "notes": "New York requires Approved Personal Locating Service Providers (APLSP) to register with the Comptroller and follow prescribed agreement terms."
+      },
+      "highlights": [
+        "New York runs a formal Approved Personal Locating Service Provider program for finders.",
+        "The Comptroller returns millions of dollars in unclaimed funds each year."
+      ]
+    },
+    {
+      "code": "PA",
+      "name": "Pennsylvania",
+      "slug": "pennsylvania",
+      "program": "Pennsylvania Unclaimed Property",
+      "office": "Pennsylvania Treasury",
+      "searchUrl": "https://www.patreasury.gov/unclaimed-property/",
+      "officeUrl": "https://www.patreasury.gov/unclaimed-property/",
+      "phone": "800-222-2046",
+      "dormancyYears": 3,
+      "finderLaw": {
+        "registrationRequired": true,
+        "feeCapPercent": 15,
+        "waitingPeriodMonths": 24,
+        "notes": "Pennsylvania Treasury certifies Finders. Assisting a claimant for a fee without certification is prohibited."
+      },
+      "highlights": [
+        "Pennsylvania Treasury operates a formal Finder certification program.",
+        "Fees are capped at 15% of the value recovered."
+      ]
+    },
+    {
+      "code": "IL",
+      "name": "Illinois",
+      "slug": "illinois",
+      "program": "Illinois Unclaimed Property (I-Cash)",
+      "office": "Illinois State Treasurer",
+      "searchUrl": "https://icash.illinoistreasurer.gov/",
+      "officeUrl": "https://illinoistreasurer.gov/Individuals/Unclaimed_Property",
+      "phone": "217-785-6998",
+      "dormancyYears": 3,
+      "finderLaw": {
+        "registrationRequired": false,
+        "feeCapPercent": 10,
+        "waitingPeriodMonths": 24,
+        "notes": "Illinois restricts fee agreements within a period after property is delivered to the Treasurer. Confirm RUUPA provisions before charging."
+      },
+      "highlights": [
+        "Branded I-Cash and run by the Illinois State Treasurer.",
+        "Illinois has returned record sums in recent years through automated claim matching."
+      ]
+    },
+    {
+      "code": "OH",
+      "name": "Ohio",
+      "slug": "ohio",
+      "program": "Ohio Unclaimed Funds",
+      "office": "Ohio Department of Commerce, Division of Unclaimed Funds",
+      "searchUrl": "https://com.ohio.gov/divisions-and-programs/unclaimed-funds/unclaimed-funds",
+      "officeUrl": "https://com.ohio.gov/divisions-and-programs/unclaimed-funds/unclaimed-funds",
+      "phone": "614-466-4433",
+      "dormancyYears": 3,
+      "finderLaw": {
+        "registrationRequired": false,
+        "feeCapPercent": 10,
+        "waitingPeriodMonths": 24,
+        "notes": "Ohio limits finder fees and restricts early agreements. Verify Revised Code provisions before charging."
+      },
+      "highlights": [
+        "Administered by the Department of Commerce rather than a treasurer.",
+        "Ohio holds unclaimed funds indefinitely with no claim deadline."
+      ]
+    },
+    {
+      "code": "GA",
+      "name": "Georgia",
+      "slug": "georgia",
+      "program": "Georgia Unclaimed Property",
+      "office": "Georgia Department of Revenue",
+      "searchUrl": "https://dor.georgia.gov/unclaimed-property",
+      "officeUrl": "https://dor.georgia.gov/unclaimed-property",
+      "phone": "855-329-9863",
+      "dormancyYears": 5,
+      "finderLaw": {
+        "registrationRequired": false,
+        "feeCapPercent": 10,
+        "waitingPeriodMonths": 24,
+        "notes": "Georgia caps finder compensation and restricts agreements soon after property is reported."
+      },
+      "highlights": [
+        "Run by the Department of Revenue — not the treasurer, which trips up many searchers.",
+        "Georgia uses a 5-year dormancy period for many property types."
+      ]
+    },
+    {
+      "code": "NC",
+      "name": "North Carolina",
+      "slug": "north-carolina",
+      "program": "NCCash — North Carolina Unclaimed Property",
+      "office": "North Carolina Department of State Treasurer",
+      "searchUrl": "https://www.nccash.gov/",
+      "officeUrl": "https://www.nccash.gov/",
+      "phone": "919-814-4300",
+      "dormancyYears": 5,
+      "finderLaw": {
+        "registrationRequired": true,
+        "feeCapPercent": 20,
+        "waitingPeriodMonths": 24,
+        "notes": "North Carolina requires annual Property Finder registration ($100/yr) and caps fees at the lesser of $1,000 or 20%. Non-compliant agreements are void and unenforceable."
+      },
+      "highlights": [
+        "Requires annual registration for anyone assisting claimants for a fee.",
+        "Fee cap is the lesser of $1,000 or 20% — one of the tightest in the country."
+      ]
+    },
+    {
+      "code": "MI",
+      "name": "Michigan",
+      "slug": "michigan",
+      "program": "Michigan Unclaimed Property",
+      "office": "Michigan Department of Treasury",
+      "searchUrl": "https://unclaimedproperty.michigan.gov/",
+      "officeUrl": "https://www.michigan.gov/treasury/unclaimed-property",
+      "phone": "517-636-5320",
+      "dormancyYears": 3,
+      "finderLaw": {
+        "registrationRequired": true,
+        "feeCapPercent": null,
+        "waitingPeriodMonths": 24,
+        "notes": "Michigan requires locators to register with the Department (registration fee applies, renewable every 4 years). No statutory percentage cap, but agreement requirements apply."
+      },
+      "highlights": [
+        "Locators must register with the Department of Treasury before assisting claimants for a fee.",
+        "Michigan holds unclaimed property indefinitely."
+      ]
+    }
+  ]
+}

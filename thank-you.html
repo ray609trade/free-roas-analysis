@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#0b5d4a" />
+  <title>Thank You — ReclaimWealth</title>
+  <meta name="description" content="Your ReclaimWealth plan is confirmed. Here is what happens next and how to reach us." />
+  <link rel="canonical" href="https://raysmgmt.com/thank-you.html" />
+  <meta name="robots" content="noindex, follow" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="assets/site.css" />
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+  <div class="bar"><div class="wrap"><a class="brand" href="index.html"><span class="mark" aria-hidden="true">R</span> ReclaimWealth</a></div></div>
+
+  <main class="legal-page" id="main" style="max-width:720px">
+    <h1>You're all set</h1>
+    <p class="updated" id="planLine">Your plan is confirmed.</p>
+
+    <div class="callout" style="border-left-color:var(--green)">
+      <p style="margin:0 0 .5em"><strong>What happens next</strong></p>
+      <ol style="margin:0;padding-left:1.2rem">
+        <li>Stripe has emailed your receipt.</li>
+        <li>We begin your search within one business day.</li>
+        <li>You'll receive your results and a claim packet by email, with contact details for every institution or state office to approach.</li>
+        <li>You file the claim directly — the money goes from them straight to you. We never handle your funds.</li>
+      </ol>
+    </div>
+
+    <div class="free-notice">
+      <strong>Reminder:</strong> no state office or retirement plan charges you to claim your own property. What you purchased is our time and legwork, and you can still do any part of it yourself using our <a href="disclosures.html">free links</a> and <a href="states/index.html">state guides</a>.
+    </div>
+
+    <h2>Need anything?</h2>
+    <p>Email <a href="mailto:info@rmgcredit.com">info@rmgcredit.com</a> and a person will reply. If you bought Ongoing Monitoring, you can cancel any time online in one click — no phone call, no retention script. See <a href="terms.html#s8">cancellation and refunds</a>.</p>
+
+    <h2>While you wait</h2>
+    <p>These are free and worth doing yourself right now — they're often the fastest wins:</p>
+    <ul>
+      <li><a href="https://www.missingmoney.com/en/" target="_blank" rel="noopener noreferrer">Search state unclaimed property</a> — needs only your name, no ID verification</li>
+      <li><a href="find/index.html">Check your old recordkeeper directly</a> — Fidelity, Empower, Vanguard and others</li>
+      <li><a href="https://lostandfound.dol.gov/" target="_blank" rel="noopener noreferrer">DOL Lost &amp; Found</a> — requires Login.gov identity verification</li>
+    </ul>
+
+    <p style="margin-top:32px"><a href="index.html" class="btn btn-green">Back to ReclaimWealth</a></p>
+  </main>
+
+  <footer class="site">
+    <div class="wrap">
+      <div class="disclaimer" style="border-top:0;padding-top:0">
+        <p>ReclaimWealth is an independent search-assistance service and is not a government agency. We are not affiliated with the U.S. Department of Labor, PBGC, IRS, any state treasury, or any retirement plan or financial institution. Every registry we reference is free to search and you may file any claim yourself at no cost. We do not take custody of funds, do not file claims on your behalf, and do not provide financial, tax, or legal advice.</p>
+        <p>© <span id="year"></span> ReclaimWealth. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/integrations.js"></script>
+  <script src="assets/site.js"></script>
+  <script>
+  (function () {
+    var planId = new URLSearchParams(window.location.search).get("plan");
+    var plan = planId && PLANS[planId];
+    if (plan) {
+      document.getElementById("planLine").textContent =
+        plan.name + " (" + plan.price + " " + plan.billing + ") is confirmed.";
+    }
+    if (typeof CONFIG !== "undefined" && CONFIG.track) {
+      CONFIG.track("purchase_complete", { plan: planId || "unknown" });
+    }
+  })();
+  </script>
+</body>
+</html>

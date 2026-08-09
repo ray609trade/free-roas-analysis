@@ -1,0 +1,82 @@
+{
+  "_meta": {
+    "description": "Official registries where lost and abandoned retirement accounts are reported. The 'excludes' and 'requires' fields are what make this more useful than the government's own pages.",
+    "lastVerified": "2026-07-25",
+    "verifyNote": "All URLs are link-checked by build/qa.js."
+  },
+  "registries": [
+    {
+      "slug": "dol-lost-and-found",
+      "name": "DOL Retirement Savings Lost & Found",
+      "operator": "U.S. Department of Labor",
+      "url": "https://lostandfound.dol.gov/",
+      "cost": "Free",
+      "priority": 1,
+      "covers": "Private-sector employer and union retirement plans, built from information plans report to the IRS.",
+      "excludes": "Church plans and government plans. Coverage is not comprehensive — a 'nothing found' result does not mean you have no lost accounts.",
+      "requires": "Identity verification through Login.gov: your legal name, date of birth, Social Security number, a mobile device, and photos of the front and back of a valid driver's license or state ID.",
+      "launched": "December 2024",
+      "notes": "Created by the SECURE 2.0 Act. This is the newest and most authoritative federal starting point, but the identity-verification step stops many people — expect it before you begin."
+    },
+    {
+      "slug": "national-registry",
+      "name": "National Registry of Unclaimed Retirement Benefits",
+      "operator": "PenChecks Trust (private)",
+      "url": "https://www.unclaimedretirementbenefits.com/",
+      "cost": "Free",
+      "priority": 2,
+      "covers": "Retirement plan benefits that participating employers have voluntarily reported as unclaimed.",
+      "excludes": "Any plan whose employer did not choose to register with the service. This is voluntary, so coverage is partial.",
+      "requires": "Your Social Security number to run a search.",
+      "notes": "Private and voluntary, not a government database. Quick to check and worth doing, but never treat an empty result as conclusive."
+    },
+    {
+      "slug": "pbgc",
+      "name": "PBGC Unclaimed Pensions",
+      "operator": "Pension Benefit Guaranty Corporation (U.S. government)",
+      "url": "https://www.pbgc.gov/wr/find-unclaimed-pensions",
+      "cost": "Free",
+      "priority": 3,
+      "covers": "Unclaimed benefits from traditional defined benefit pension plans that PBGC has taken over, typically after the sponsoring company failed.",
+      "excludes": "401(k) and other defined contribution accounts. This is pensions only.",
+      "requires": "Name and, helpfully, the former employer's name. No SSN needed for the initial search.",
+      "notes": "Search this if you or a relative had a traditional pension, especially from a company that went bankrupt."
+    },
+    {
+      "slug": "state-unclaimed-property",
+      "name": "State Unclaimed Property (MissingMoney)",
+      "operator": "State treasuries via NAUPA",
+      "url": "https://www.missingmoney.com/en/",
+      "cost": "Free",
+      "priority": 4,
+      "covers": "Cash and securities turned over to states when accounts go dormant, including cashed-out retirement balances.",
+      "excludes": "Not every state participates in MissingMoney, and some states' data lags. Always also check each state's own site directly.",
+      "requires": "Just your name. This is public record — no SSN required to search.",
+      "notes": "The easiest place to start because it needs no identity verification. Search every state you have ever lived or worked in, and check maiden and former names."
+    },
+    {
+      "slug": "form-5500",
+      "name": "DOL Form 5500 / EFAST Filing Search",
+      "operator": "U.S. Department of Labor",
+      "url": "https://www.efast.dol.gov/5500Search/",
+      "cost": "Free",
+      "priority": 5,
+      "covers": "Annual reports filed by employer retirement plans, which name the plan administrator and plan sponsor contacts.",
+      "excludes": "Very small plans may have limited filing requirements, and filings can lag by a year or more.",
+      "requires": "The former employer's name. No personal information needed.",
+      "notes": "This is the professional's tool. When a company merged, was acquired, or closed, the Form 5500 tells you who is legally responsible for the plan today — which is who you actually need to call."
+    },
+    {
+      "slug": "ebsa",
+      "name": "DOL Benefits Advisors (EBSA)",
+      "operator": "Employee Benefits Security Administration, U.S. Department of Labor",
+      "url": "https://www.dol.gov/agencies/ebsa/about-ebsa/ask-a-question/ask-ebsa",
+      "cost": "Free",
+      "priority": 6,
+      "covers": "Free one-on-one help from federal benefits advisors when a plan will not respond or you cannot identify an administrator.",
+      "excludes": "They assist and investigate; they do not maintain a searchable balance database.",
+      "requires": "Nothing to make contact.",
+      "notes": "Genuinely free federal help that almost nobody uses. If a plan is stonewalling you, this is the escalation path."
+    }
+  ]
+}

@@ -1,0 +1,58 @@
+name: QA
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# Deliberately uses NO external actions (no actions/checkout, no
+# actions/setup-node). Repositories can be configured to allow only local
+# actions, which makes a workflow depending on the marketplace fail before a
+# runner is even assigned. Cloning with git and using the runner's
+# preinstalled Node keeps this workflow runnable under the strictest setting.
+jobs:
+  qa:
+    name: Build & compliance gate
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the commit
+        env:
+          TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: |
+          git init -q .
+          git remote add origin "https://x-access-token:${TOKEN}@github.com/${REPO}.git"
+          git -c protocol.version=2 fetch -q --depth 1 origin "$SHA"
+          git checkout -q FETCH_HEAD
+          echo "Checked out $SHA"
+
+      - name: Show Node version
+        run: node --version
+
+      - name: Apply the shared page templates
+        run: node tools/build-site.js
+
+      - name: Fail if pages are out of date
+        # Pages are committed so the site can be served straight from the
+        # branch. build-site.js is idempotent, so if running it changes
+        # anything, someone edited a page or template without re-running it
+        # and the committed pages would be inconsistent with the templates.
+        run: |
+          if ! git diff --quiet; then
+            echo "::error::Pages are out of date. Run 'node tools/build-site.js' and commit the result."
+            git diff --stat
+            exit 1
+          fi
+          echo "Pages are in sync with the templates."
+
+      - name: Run QA gate
+        # Correctness, legal/compliance and quality checks. Fails on a missing
+        # free-claim disclosure, missing or bundled TCPA consent language, a
+        # pre-checked consent box, a broken internal link, a root-absolute link
+        # (which breaks filesystem review), a leaked key, or duplicate metadata.
+        run: node tools/qa.js
